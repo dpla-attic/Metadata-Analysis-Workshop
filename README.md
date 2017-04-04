@@ -5,10 +5,10 @@ Welcome to the open repository, documentation and materials for the DPLAfest 201
 **Table of Contents for this Document**
 
 - [About the Workshop](#about-the-workshop)
-- Workshop Schedule
-- Our Expectations of You
-- Participant Requirements (Installation Requests)
-- Contact Before, During, After the Workshop
+- [Workshop Schedule](#workshop-schedule)
+- [Contact Before, During, After the Workshop](#contact-before-during-after-the-workshop)
+- [Our Expectations of You](#our-expectations-of-you)
+- [Participant Requirements (Installation Requests)](#participant-requirements)
 
 
 ## About the Workshop
@@ -49,7 +49,7 @@ To keep this workshop a safe and inclusive space, we ask that you review and fol
 
 ## Participant Requirements
 
-We request that all participants **bring their own laptop**, preferably one you have installation or admin privileges on, to the workshop. The laptop should have the software listed below installed as well as an up-to-date modern web browser (basically, not Internet Explorer). If you have any issues with the requested set-up, please contact us ASAP using the [communication methods detailed above](#contact-before,-during,-after-the-workshop).
+We request that all participants **bring their own laptop**, preferably one you have installation or admin privileges on, to the workshop. The laptop should have the software listed below installed as well as an up-to-date modern web browser (basically, not Internet Explorer). If you have any issues with the requested set-up, please contact us ASAP using the [communication methods detailed above](#contact-before-during-after-the-workshop).
 
 ### Bash Shell (Required)
 Bash is a commonly-used shell that gives you the power to do simple tasks more quickly.
