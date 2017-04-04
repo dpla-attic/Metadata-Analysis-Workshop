@@ -10,10 +10,6 @@ This workshop is a registration-only event for DPLA Hubs & Partners. For registr
 
 We ask that all participants come to the workshop ready to dive in by reviewing the information in this document. If you want a sneak peak of the workshop's contents, feel free to also follow this repository (you'll be notified of updates).
 
-## Our Expectations of You
-
-To keep this workshop a safe and inclusive space, we ask that you review and follow the [DPLAfest 2017 Code of Conduct](https://dp.la/info/get-involved/dplafest/april-2017/dplafest-2017-code-of-conduct/) and [the Recurse Center Social Rules (aka Hacker School Rules)](https://www.recurse.com/manual#sub-sec-social-rules).
-
 ## Workshop Schedule
 
 Time | Lesson | Leader | Lesson Materials
@@ -26,40 +22,57 @@ Time | Lesson | Leader | Lesson Materials
 **3-4:30 PM** | Metadata analysis (90 minutes, including working time) | Christina | TBD
 **4:30-5 PM** | Other DPLA metadata analysis tools to explore (30 minutes) | Gretchen | TBD
 
+## Our Expectations of You
+
+To keep this workshop a safe and inclusive space, we ask that you review and follow the [DPLAfest 2017 Code of Conduct](https://dp.la/info/get-involved/dplafest/april-2017/dplafest-2017-code-of-conduct/) and [the Recurse Center Social Rules (aka Hacker School Rules)](https://www.recurse.com/manual#sub-sec-social-rules).
+
 ## Participant Requirements
 
-We request that all participants **bring their own laptop** to the workshop with the software listed below installed and an up-to-date modern web browser:
+We request that all participants **bring their own laptop**, preferably one you have installation or admin privileges on, to the workshop. The laptop should have the software listed below installed as well as an up-to-date modern web browser (basically, not Internet Explorer):
 
-### Bash Shell
+### Bash Shell (Required)
 Bash is a commonly-used shell that gives you the power to do simple tasks more quickly.
 
 Platform | Installation Instructions | Link to Installation Help
 ---------|---------------------------|--------------------------
-Windows  | Git Bash? Or stick with other option? | TBD
+Windows  | Cygwin or Git for Windows (which also installs a bash shell). | See here for installing [Cygwin](https://www.cygwin.com/cygwin-ug-net/setup-net.html), and see [here](https://git-for-windows.github.io/) for installing Git for Windows. We recommend Git for Windows if you also want to install Git (see recommendations, below)
 Mac OS X | Comes pre-installed - look for Terminal (found in /Applications/Utilities) | n/a
 Linux    | Comes pre-installed - The default shell is usually Bash, but if your machine is set up differently you can run it by opening a terminal and typing bash. | n/a
 
-### Git & GitHub Account
+
+### Python & Pip (Required)
+Python is a programming language that is helpful for scripting work with data (among other uses). Pip is a package management library for Python - i.e., it installs bits of existing Python code for you easily so you can run more scripts.
+
+We won't be learning Python in this workshop, but how to run and work with a set of existing Python scripts.
+
+Regardless of how you choose to install it, please make sure you have **Python version 2.7.x** or greater for Python 2 (Python 3 will mostly likely not work).
+
+Platform | Installation Instructions | Link to Installation Help
+---------|---------------------------|--------------------------
+Windows  | Install Python 2.7.9 or greater (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+Mac OS X | Python 2.7 & Pip is usually pre-installed on Macs OS X. If not, or you want to get a later version, download the installer for 2.7.9 or greater from the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+Linux  | Install Python 2.7.9 or greater (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+
+
+### Python Virtual Environments (Recommended)
+Virtualenv (or Virtual Environments) is a Python library that allows you to create isolated environments on your computer to install packages. This protects your system Python needs from any changes in your Python experimentation, as well as having other useful aspects.
+
+If you installed a Bash shell, Python & Pip as outlined above, you can then use Pip to install virtualenv.
+
+Platform | Installation Instructions | Link to Installation Help
+---------|---------------------------|--------------------------
+Windows, Mac OS X, or Linux  | In your Bash shell: `pip install virtualenv` | https://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/
+
+### Git & GitHub Account (Recommended)
 Git is a version control system, and GitHub is a hosting platform for Git Repositories.
 
-These are not required, but we strongly recommend them for ease of pulling down the workshop data.
+These are not required, but we strongly recommend them for ease of pulling down the workshop data, scripts, & documentation.
 
 Platform | Installation Instructions | Link to Installation Help
 ---------|---------------------------|--------------------------
 Windows  | Download & Run the Git for Windows [installer](https://git-for-windows.github.io/). After that installation completes, follow only [step 2 forward on the GitHub setup site](https://help.github.com/articles/set-up-git/#platform-windows) to finish your Git/GitHub installation & setup. | https://git-for-windows.github.io/, https://help.github.com/articles/set-up-git/#platform-windows
 Mac OS X | Install and set up Git following the directions in the link. Note - this may require you download XCode Tools first, which can be a lengthy (but not complicated) download. | https://help.github.com/articles/set-up-git/#platform-mac
 Linux    | If Git is not already available on your machine you can try to install it via your distro's package manager. For Debian/Ubuntu run sudo apt-get install git and for Fedora run sudo yum install git. | https://help.github.com/articles/set-up-git/#platform-linux
-
-### Python & Pip
-Regardless of how you choose to install it, please make sure you install Python version 2.7.x or greater in Python 2.
-
-Platform | Installation Instructions | Link to Installation Help
----------|---------------------------|--------------------------
-Windows  | tbd | tbd
-Mac OS X | tbd | tbd
-Linux    | tbd | tbd
-
-
 
 ## Contact Before, During, After the Workshop
 
