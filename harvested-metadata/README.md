@@ -1,10 +1,8 @@
 # Harvested metadata
 
-This is the harvest-metadata script and information about the sample data pulled.
-
 A few DPLA partners have offered up their OAI feeds for us to use as sample data for the workshop.
 
-We will walk through how to harvest these datasets yourself in the Harvesting Metadata section, but for now, these data dumps are also available in the harvested-metadata directory (in case the wifi or internet is shaky, or the retrieval is too slow, etc.).
+We will walk through how to harvest these datasets yourself in the Harvesting Metadata section, but for now, these data dumps are also available in this harvested-metadata directory (in case the wifi or internet is shaky, or the retrieval is too slow, etc.).
 
 ## From Illinois Digital Heritage Hub's partners
 
