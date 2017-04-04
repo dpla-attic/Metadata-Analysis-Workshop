@@ -240,13 +240,15 @@ Here we used the `mkdir` command (meaning 'make directories') to create a direct
 
 #### cp, cp -r, mv
 
-<details name="Example">
+
+Answer <details>
 
 ```
 blfjksdlafjdksla
 ```
 
 </details
+
 
 ### Finding & Opening Things
 
