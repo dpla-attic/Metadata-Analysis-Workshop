@@ -82,9 +82,9 @@ Regardless of how you choose to install it, please make sure you have **Python v
 
 Platform | Installation Instructions | Link to Installation Help
 ---------|---------------------------|--------------------------
-Windows  | Install Python 2.7.9 or greater (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
-Mac OS X | Python 2.7 & Pip is usually pre-installed on Macs OS X. If not, or you want to get a later version, download the installer for 2.7.9 or greater from the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
-Linux  | Install Python 2.7.9 or greater (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+Windows  | Install Python 2.7.x (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+Mac OS X | Python 2.7 & Pip is usually pre-installed on Macs OS X. If not, or you want to get a later version, download the installer for 2.7.x from the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
+Linux  | Install Python 2.7.x (which comes with Pip) by using the installer from the the Python website (the website should auto-detect your OS). | https://www.python.org/downloads/
 
 #### Python & Pip Install Test
 
