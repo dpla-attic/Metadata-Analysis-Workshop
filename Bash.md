@@ -4,7 +4,7 @@
 
 ## Goals
 
-- *nix Shell & Bash Introduction
+- \*nix Shell & Bash Introduction
 - Navigating & Working with Files & Directories
 - Pipes & Filters
 - Finding Things
@@ -83,7 +83,9 @@ Note: this command is for Mac and Linux users only. It does not work directly fo
 #### Shell tricks
 
 - tab autocomplete: Hitting tab at any time within the shell will prompt it to attempt to auto-complete the line based on the files or sub-directories in the current directory. Where two or more files have the same characters, the auto-complete will only fill up to the first point of difference, after which we can add more characters, and try using tab again.
-- up + down arrows for previous commands
+- up + down arrows for previous commands: On a blank command prompt, hit the up arrow key and notice that the previous command you typed appears before your cursor. We can continue pressing the up arrow to cycle through your previous commands.
+- History Command: Use the history command to see a list of all the commands you've entered during the current session. Use the space bar to navigate through pages, and q to quit.
+- Wildcards: Luckily the shell supports wildcards! The ? (matches exactly one character) and * (matches zero or more characters) are probably familiar from library search systems. We can use the * wildcard to write the above head command in a more compact way:
 
 ### Moving around files & directories:
 
@@ -236,18 +238,70 @@ Here we used the `mkdir` command (meaning 'make directories') to create a direct
 
 #### rmdir, rmdir -p, rm, rm -rf
 
+Finally, onto deleting. We won't use it now, but if you do want to delete a file, for whatever reason, the command is `rm`, or remove.
 
+Using wildcards, we can even delete lots of files. And adding the -r flag we can delete folders with all their content.
+
+Unlike deleting from within our graphical user interface, there is no warning, no recycling bin from which you can get the files back and no other undo options! For that reason, please be very careful with rm and extremely careful with `rm -r`.
 
 #### cp, cp -r, mv
 
+We may also want to change the file name to something more descriptive. We can move it to a new name by using the `mv` or move command, giving it the old name as the first argument and the new name as the second argument:
 
-Answer <details>
-
+```bash
+$ mv 829-0.txt gulliver.txt
+This is equivalent to the 'rename file' function.
 ```
-blfjksdlafjdksla
+
+Afterwards, when we perform a ``ls`` command, we will see that it is now gulliver.txt:
+
+```bash
+$ ls
+2014-01-31_JA-africa.tsv 2014-02-02_JA-britain.tsv gulliver.txt 2014-01-31_JA-america.tsv 33504-0.txt 2014-01_JA.tsv
 ```
 
-</details
+Instead of moving a file, you might want to copy a file (make a duplicate), for instance to make a backup before modifying a file using some script you're not quite sure how works. Just like the `mv` command, the `cp` command takes two arguments: the old name and the new name.
+
+How would you make a copy of the file gulliver.txt called gulliver-backup.txt? Try it!
+
+Click 'details' to see the answer
+
+
+<detail>
+
+```bash
+$ cp gulliver.txt gulliver-backup.txt
+```
+
+<detail>
+
+
+Renaming a directory works in the same way as renaming a file. Try using the mv command to rename the firstdir directory to backup.
+
+Click 'details' to see the answer
+
+
+<detail>
+
+```bash
+$ mv firstdir backup
+```
+
+<detail>
+
+
+If the last argument you give to the mv command is a directory, not a file, the file given in the first argument will be moved to that directory. Try using the `mv` command to move the file gulliver-backup.txt into the backupfolder.
+
+```bash
+$ mv gulliver-backup.txt backup
+```
+
+This would also work:
+
+```bash
+$ mv gulliver-backup.txt backup/gulliver-backup.txt
+```
+
 
 
 ### Finding & Opening Things
@@ -316,19 +370,261 @@ Like many other shell commands, the commands cat, head, tail and less can take a
 
 #### grep, grep -c, grep -o, grep -i, grep -oP, grep -v
 
+Searching for something in one or more files is something we'll often need to do, so let's introduce a command for doing that: `grep` (short for global regular expression print). As the name suggests, it supports regular expressions and is therefore only limited by your imagination, the shape of your data, and - when working with thousands or millions of files - the processing power at your disposal.
+To begin using `grep`, first navigate to the CUL-MWG-Workshop-master directory if not already there. Then create a new directory "results":
+
+
+```bash
+$ mkdir results
+```
+
+Now let's try our first search:
+
+```bash
+$ grep metadata *.csv
+```
+
+Remember that the shell will expand `*.csv` to a list of all the .csv files in the directory. `grep` will then search these for instances of the string "1999" and print the matching rows.
+
+Amend `grep metadata *.csv` to `grep -c metadata *.csv` and hit enter.
+
+```bash
+$ grep -c metadata *.csv
+2017-ecommons-CU-etds.csv:3
+2017-ecommons-CUL-community.csv:139
+CUlecturetapes_metadata_ingest-ready.csv:0
+```
+
+The shell now prints the number of times the string metadata appeared in each file.
+We will try another search:
+
+```bash
+$ grep -c 'Digital Archive' *.csv
+2017-ecommons-CU-etds.csv:0
+2017-ecommons-CUL-community.csv:3
+CUlecturetapes_metadata_ingest-ready.csv:0
+```
+
+We got back the counts of the instances of the string 'application/pdf' within the files. Now, amend the above command to the below and observe how the output of each is different:
+
+```bash
+$ grep -ci 'Digital Archive' *.csv
+2017-ecommons-CU-etds.csv:0
+2017-ecommons-CUL-community.csv:7
+CUlecturetapes_metadata_ingest-ready.csv:0
+```
+
+This repeats the query, but prints a case insensitive count (including instances of both digital archive and Digital Archive and other variants).
+
+As before, cycling back and adding `>` results/, followed by a filename (ideally in .txt format), will save the results to a data file. Go ahead and do this on your own.
+
+So far we have counted strings in file and printed to the shell or to file those counts. But the real power of grep comes in that you can also use it to create subsets of tabulated data (or indeed any data) from one or multiple files.
+
+```bash
+$ grep -i metadata *.csv
+```
+
+This script looks in the defined files and prints any lines containing revolution (without regard to case) to the shell.
+
+```bash
+$ grep -i metadata *.csv > results/2017-02-15_metadata-ecommons.csv
+```
+
+This saves the subsetted data to file.
+
+Sometimes you need to capture the whole word only in that form (so revolution, but not revolutionary). The `-w` flag instructs `grep` to look for whole words only, giving us greater precision in our search.
+
+```bash
+$ grep -iw revolution *.csv > results/DATE_JAiw-revolution.csv
+```
+
+This script looks in both of the defined files and exports any lines containing the whole word revolution (without regard to case) to the specified .csv file.
+
+We can show the difference between the files we created.
+
+```bash
+$ wc -l results/*.csv
+     186 results/2017-02-15_metadata-ecommons.csv
+     162 results/DATE_JAiw-revolution.csv
+     348 total
+```
+
+Finally, we'll use the regular expression syntax covered earlier to search for similar words.
+
+There is unfortunately both "basic" and "extended" regular expressions. This is a common cause of confusion. Unless you want to remember the details, just always use extended regular expressions (-E flag) when doing something more complex than searching for a plain string.
+
+The regular expression `'fr[ae]nc[eh]'` will match "france", "french", but also "frence" and "franch". It's generally a good idea to enclose the expression in single quotation marks, since that ensures the shell sends it directly to grep without any processing (such as trying to expand the wildcard operator *).
+
+```bash
+$ grep -iwE 'fr[ae]nc[eh]' *.csv
+```
+
+The shell will print out each matching line.
+We include the `-o` flag to print only the matching part of the lines e.g. (handy for isolating/checking results):
+
+```bash
+$ grep -iwEo 'fr[ae]nc[eh]' *.csv
+```
+
 ### Other Commands
 
 #### wc, wc -l, wc -w, wc -m
 
+`wc` is the "word count" command: it counts the number of lines, words, bytes and characters in files. Since we love the wildcard operator, let's run the command `wc *.tsv` to get counts for all the .tsv files in the current directory (it takes a little time to complete):
+
+```bash
+$ wc *.csv
+   12012 1804072 13923125 2017-ecommons-CU-etds.csv
+   13172  452320 5233591 2017-ecommons-CUL-community.csv
+     238   15220  147314 CUlecturetapes_metadata_ingest-ready.csv
+   25422 2271612 19304030 total
+$ wc *.*sv
+   13712  511261 3773660 2014-01-31_JA-africa.tsv
+   27392 1049601 7731914 2014-01-31_JA-america.tsv
+    5375  196999 1453418 2014-02-02_JA-britain.tsv
+   12012 1804072 13923125 2017-ecommons-CU-etds.csv
+   13172  452320 5233591 2017-ecommons-CUL-community.csv
+     238   15220  147314 CUlecturetapes_metadata_ingest-ready.csv
+   71901 4029473 32263022 total
+```
+
+The first three columns contains the number of lines, words and bytes (to show number characters you have to use a flag).
+
+If we only have a handful of files to compare, it might be faster or more convenient to just check with Microsoft Excel, OpenRefine or your preferred text editor, but when we have tens, hundreds or thousands of documents, the Unix shell has a clear speed advantage. The real power of the shell comes from being able to combine commands and automate tasks, though. We will touch upon this slightly.
+
+For now, we'll see how we can build a simple pipeline to find the shortest file in terms of number of lines. We start by adding the -l flag to get only the number of lines, not the number of words and bytes:
+
+```bash
+$ wc -l *sv
+   13712 2014-01-31_JA-africa.tsv
+   27392 2014-01-31_JA-america.tsv
+    5375 2014-02-02_JA-britain.tsv
+   12012 2017-ecommons-CU-etds.csv
+   13172 2017-ecommons-CUL-community.csv
+     238 CUlecturetapes_metadata_ingest-ready.csv
+   71901 total
+```
+
+The `wc` command itself doesn't have a flag to sort the output, but as we'll see, we can combine three different shell commands to get what we want.
+
+First, we have the `wc -l *sv` command. We will save the output from this command in a new file. To do that, we redirect the output from the command to a file using the ‘greater than’ sign (>), like so:
+
+`$ wc -l *sv > lengths.txt`
+
+There's no output now since the output went into the file lengths.txt, but we can check that the output indeed ended up in the file using `cat` or `less` (or Notepad or any text editor).
+
+```bash
+$ cat lengths.txt  
+   13712 2014-01-31_JA-africa.tsv
+   27392 2014-01-31_JA-america.tsv
+    5375 2014-02-02_JA-britain.tsv
+   12012 2017-ecommons-CU-etds.csv
+   13172 2017-ecommons-CUL-community.csv
+     238 CUlecturetapes_metadata_ingest-ready.csv
+   71901 total
+```
+
 #### sort, sort -f, sort -n, sort -r, sort -c
+
+
+Next, there is the `sort` command. We'll use the -n flag to specify that we want numerical sorting, not lexical sorting, we output the results into yet another file, and we use cat to check the results:
+
+```bash
+$ sort -n lengths.txt > sorted-lengths.txt
+$ cat sorted-lengths.txt
+     238 CUlecturetapes_metadata_ingest-ready.csv
+    5375 2014-02-02_JA-britain.tsv
+   12012 2017-ecommons-CU-etds.csv
+   13172 2017-ecommons-CUL-community.csv
+   13712 2014-01-31_JA-africa.tsv
+   27392 2014-01-31_JA-america.tsv
+   71901 total
+```
 
 #### uniq, uniq -c, uniq -u, uniq -d
 
-#### sed, sed s//, sed s:/
+If you pipe something to the `uniq` command, it will filter out duplicate lines and only return unique ones. Try piping the output from the command in the last exercise to uniq and then to wc -l to count the number of unique ISSN values.
 
-### Pipelines & pipes to create a sequence with output passed over
+```bash
+$ grep -Eo '\d{4}-\d{4}' 2014-01_JA.tsv | uniq | wc -l
+```
+
+### Pipelines & pipes
+
+But we're really just interested in the end result, not the intermediate results now stored in lengths.txt and sorted-lengths.txt.
+What if we could send the results from the first command (`wc -l *sv`) directly to the next command (`sort -n`) and then the output from that command to `head -n 1`? Luckily we can, using a concept called **pipes**. On the command line, you make a pipe with the vertical bar character |. Let's try with one pipe first:
+
+```bash
+$ wc -l *sv | sort -n
+     238 CUlecturetapes_metadata_ingest-ready.csv
+    5375 2014-02-02_JA-britain.tsv
+   12012 2017-ecommons-CU-etds.csv
+   13172 2017-ecommons-CUL-community.csv
+   13712 2014-01-31_JA-africa.tsv
+   27392 2014-01-31_JA-america.tsv
+   71901 total
+```
+
+Notice that this is exactly the same output that ended up in our sorted-lengths.txt earlier. Let's add another pipe:
+
+```bash
+$ wc -l *sv | sort -n | head -n 1
+238 CUlecturetapes_metadata_ingest-ready.csv
+```
+
+It can take some time to fully grasp pipes and use them efficiently, but it's a very powerful concept that you will find not only in the shell, but also in most programming languages.
+
+> See http://jorol.de/2016-ELAG-Bootcamp/slides/#6 for more abbreviated and technical introduction to working with pipes.
+
+This simple idea is why Unix has been so successful. Instead of creating enormous programs that try to do many different things, Unix programmers focus on creating lots of simple tools that each do one job well, and that work well with each other.
+This programming model is called “pipes and filters”. We’ve already seen pipes; a filter is a program like wc or sort that transforms a stream of input into a stream of output. Almost all of the standard Unix tools can work this way: unless told to do otherwise, they read from standard input, do something with what they’ve read, and write to standard output.
+The key is that any program that reads lines of text from standard input and writes lines of text to standard output can be combined with every other program that behaves this way as well. You can and should write your programs this way so that you and other people can put those programs into pipes to multiply their power.
+
+
+We have our `wc -l *sv | sort -n | head -n 1` pipeline. What would happen if you piped this into `cat`? Try it!
+
+Click 'detail' to get the expected results.
+
+
+<detail>
+
+The cat command just outputs whatever it gets as input, so you get exactly the same output from
+
+```bash
+$ wc -l *sv | sort -n | head -n 1
+```
+
+and
+
+```bash
+$ wc -l *sv | sort -n | head -n 1 | cat
+```
+
+</detail>
+
 
 ### Handling input and output from files (i.e. <, >, >>)
+
+We will save the output from this command in a new file. To do that, we redirect the output from the command to a file using the ‘greater than’ sign (>), like so:
+
+`$ wc -l *sv > lengths.txt`
+
+The date command outputs the current date and time. Can you write the current date and time to a new file called logfile.txt? Then check the contents of the file.
+
+```bash
+$ date > logfile.txt
+$ cat logfile.txt
+```
+
+To check the contents, you could also use less or many other commands.
+
+Beware that `>` will happily overwrite an existing file without warning you, so please be careful. While `>` writes to a file, `>>` appends something to a file. Try to append the current date and time to the file logfile.txt?
+
+```bash
+$ date >> logfile.txt
+$ cat logfile.txt
+```
+
 
 ## Further Resources
 
