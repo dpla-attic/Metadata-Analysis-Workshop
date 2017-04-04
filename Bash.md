@@ -240,7 +240,7 @@ Here we used the `mkdir` command (meaning 'make directories') to create a direct
 
 #### cp, cp -r, mv
 
-<details>
+<details name="Example">
 
 ```
 blfjksdlafjdksla
