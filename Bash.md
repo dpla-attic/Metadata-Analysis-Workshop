@@ -18,6 +18,31 @@ Either using Git, curl, the GitHub interface or thumbdrives passed around before
 
 **Table of Contents**
 
+* [Preparation](#preparation-1)
+* [Shell & Bash Intro](#nix-shell--bash-introduction)
+    * [Basic Structure of a Command](#basic-structure-of-a-command-command-optionsflags-arguments)
+    * [How to get help understanding a Command](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#how-to-get-help-understanding-a-command)
+    * [Shell tricks](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#shell-tricks)
+* [Moving around files & directories](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#moving-around-files--directories)
+    * [pwd](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#pwd)
+    * [ls, ls -A, ls -R, ls -alsh](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#ls-ls--a-ls--r-ls--alsh)
+    * [cd, cd /, cd ./wherever, cd ../.., cd ~](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#cd-cd--cd-wherever-cd--cd-)
+    * [mkdir, mkdir -p](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#mkdir-mkdir--p)
+    * [rmdir, rmdir -p, rm, rm -rf](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#rmdir-rmdir--p-rm-rm--rf)
+    * [cp, cp -r, mv](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#cp-cp--r-mv)
+* [Finding & Opening Things](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#finding--opening-things)
+    * [find, find -name -type, find -iname, find -not](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#find-find--name--type-find--iname-find--not)
+    * [nano, vi, open](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#nano-vi-open)
+    * [cat, head -n, tail -n, tail -f, more, less](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#cat-head--n-tail--n-tail--f-more-less)
+    * [grep, grep -c, grep -o, grep -i, grep -oP, grep -v](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#grep-grep--c-grep--o-grep--i-grep--op-grep--v)
+* [Other Commands](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#other-commands)
+    * [wc, wc -l, wc -w, wc -m](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#wc-wc--l-wc--w-wc--m)
+    * [sort, sort -f, sort -n, sort -r, sort -c](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#sort-sort--f-sort--n-sort--r-sort--c)
+    * [uniq, uniq -c, uniq -u, uniq -d](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#uniq-uniq--c-uniq--u-uniq--d
+* [Pipelines & pipes](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#pipelines--pipes)
+* [Handling input and output from files (i.e. <, >, >>)](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#handling-input-and-output-from-files-ie---)
+* [Further Resources](https://github.com/dpla/Metadata-Analysis-Workshop/blob/bash-patch/Bash.md#further-resources)
+
 ### Preparation
 
 Quick grab of the Workshop Repo (through whatever method), then unzip as needed.
