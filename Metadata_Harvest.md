@@ -39,68 +39,67 @@ To speed up this process, I'm working on a hosted version of these analysis scri
 
 For these harvest and analysis Python scripts to run, we need to check that Python is installed and the version being used. This should have occurred before the workshop, but we're going to run through this quickly now.
 
-In your shell used for the previous lesson (thanks Gretchen), type the following command:
+In your shell used for the previous lesson, type the command `python --version`:
 
 ```bash
 $ python --version
- Python 2.7.13
+  Python 2.7.13
 ```
 
-Python 2.7.9 or greater (or Python 3) comes installed with Pip, a package manager for Python. To check Pip, type the following command:
+Python 2.7.9 or greater (or Python 3) comes installed with Pip, a package manager for Python. To check Pip, type the command `pip --version`:
 
 ```bash
 $ pip --version
- pip 9.0.1 from /usr/local/lib/python2.7/site-packages (python 2.7)
+  pip 9.0.1 from /usr/local/lib/python2.7/site-packages (python 2.7)
 ```
 
 Next, in our shell, we want to change into our directory where these repository materials are stored. You should have downloaded and navigated through this in the last lesson. **If not**:
 
-Clone this repository (https://github.com/cul-it/sharedshelf-metadata.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'). Note: this requires **the recursive flag** to get all the materials:
+Clone this repository (https://github.com/cul-it/sharedshelf-metadata.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'). Note: this requires **the recursive flag** to get all the materials (if you didn't install Git, just ask the workshop leader for the a thumbdrive with the materials):
 
 ```bash
 $ git clone --recursive https://github.com/dpla/Metadata-Analysis-Workshop.git
- Cloning into 'Metadata-Analysis-Workshop'...
- remote: Counting objects: 78, done.
- remote: Compressing objects: 100% (59/59), done.
- remote: Total 78 (delta 30), reused 56 (delta 15), pack-reused 0
- Unpacking objects: 100% (78/78), done.
- Submodule 'metadataQA' (https://github.com/cmh2166/metadataQA) registered for path 'metadataQA'
- Cloning into '/Users/Christina/Metadata-Analysis-Workshop/metadataQA'...
- Submodule path 'metadataQA': checked out '0e44b393bc11e00d8a3e24959be45e3f229e90c4'
+  Cloning into 'Metadata-Analysis-Workshop'...
+  remote: Counting objects: 78, done.
+  remote: Compressing objects: 100% (59/59), done.
+  remote: Total 78 (delta 30), reused 56 (delta 15), pack-reused 0
+  Unpacking objects: 100% (78/78), done.
+  Submodule 'metadataQA' (https://github.com/cmh2166/metadataQA) registered for path 'metadataQA'
+  Cloning into '/Users/Christina/Metadata-Analysis-Workshop/metadataQA'...
+  Submodule path 'metadataQA': checked out '0e44b393bc11e00d8a3e24959be45e3f229e90c4'
 ```
 
-With the workshop materials repository on your local machine (you'll need to remember where you downloaded or cloned this directory):
+With the workshop materials repository on your local machine (you'll need to remember where you downloaded or cloned this directory), lets change into that directory and make sure we are in the right spot using the `cd`, `pwd`, and `ls` commands we just learned:
 
 ```bash
 $ cd Metadata-Analysis-Workshop/
 $ pwd
- /Users/Christina/Metadata-Analysis-Workshop
+  /Users/Christina/Metadata-Analysis-Workshop
 $ ls .
- Bash.md			Metadata_Harvest.md	harvested-metadata	metadata-python
- Metadata_Breakers.md	README.md		images			metadataQA
+  Bash.md			Metadata_Harvest.md	harvested-metadata	metadata-python
+  Metadata_Breakers.md	README.md		images			metadataQA
 ```
 
 Python virtual environments enable you to isolate the Python options (version used, libraries used, version of libraries used) to a particular working area or project. This is helpful if you don't want to change any global settings on your computer - which often, you don't.
 
-Now we are going to create a virtualenv with the Python version you're working with (if you didn't install virtualenv, then skip this step):
+Now we are going to create a virtualenv with the Python version you're working with (*if you didn't install virtualenv, then skip this step*). Type the command `virtualenv venv`:
 
 ```bash
 $ virtualenv venv
 ```
+    *Special Note:* If you want to create a virtualenv specific a particular Python version that is not the default, use the following command instead, where '/usr/local/bin/python' points to the response of 'which python' or 'which python3', etc.:
 
-If you want to create a virtualenv specific a particular Python version that is not the default, use the following command instead, where '/usr/local/bin/python' points to the response of 'which python' or 'which python3', etc.:
+    ```bash
+    $ virtualenv -p /usr/local/bin/python venv
+    ```
 
-```bash
-$ virtualenv -p /usr/local/bin/python venv
-```
-
-The response of the above should look like this:
+The response of the `virtualenv venv` should look like this:
 
 ```bash
 $ virtualenv venv
- New python executable in /Users/Christina/Metadata-Analysis-Workshop/venv/bin/python2.7
- Also creating executable in /Users/Christina/Metadata-Analysis-Workshop/venv/bin/python
- Installing setuptools, pip, wheel...done.
+  New python executable in /Users/Christina/Metadata-Analysis-Workshop/venv/bin/python2.7
+  Also creating executable in /Users/Christina/Metadata-Analysis-Workshop/venv/bin/python
+  Installing setuptools, pip, wheel...done.
 ```
 
 You should only have to do the above once (you're done for the rest of this workshop), whereas the follow should be redone when you run the scripts or need to capture updates.
@@ -109,45 +108,47 @@ You should only have to do the above once (you're done for the rest of this work
 
 Each time you want to run the scripts, you'll want to first activate/start up your virtual environment (if using).
 
-In the same location where you ran the above comments, type and run the virtualenv activation:
+In the same location where you ran the above comments, type and run the virtualenv activation `source venv/bin/activate`:
 
 ```bash
 $ source venv/bin/activate
- (venv) bash-3.2$
+  (venv) bash-3.2$
 ```
-Depending on your shell / command line client, you will see something indicating your working in the 'venv' virtual environment now, namely, the name of the virtualenv you created in parenthesis before the bash command start:
+
+Depending on your shell, you will see something indicating your working in the 'venv' virtual environment now, namely, the name of the virtualenv you created in parentheses before the bash command start:
 
 ```bash
 (venv) $
 ```
 
-We now want to install all the Python scripts library requirements to this virtual environment. Note: you should only ever have to run this command once when you start and then whenever there are updates to the scripts:
+We now want to install all the Python scripts library requirements to this virtual environment. _Note: you should only ever have to run this command once when you start and then whenever there are updates to the scripts._ Type `pip install -r metadataQA/requirements.txt` (use tab to autocomplete filenames & confirm you're in the right repository!):
 
 ```bash
 (venv)$ pip install -r metadataQA/requirements.txt
- Collecting lxml==3.4.4 (from -r metadataQA/requirements.txt (line 1))
- Collecting objectpath==0.5 (from -r metadataQA/requirements.txt (line 2))
-   Using cached objectpath-0.5-py2.py3-none-any.whl
- Collecting pymarc==3.0.4 (from -r metadataQA/requirements.txt (line 3))
- Collecting pytz==2015.6 (from -r metadataQA/requirements.txt (line 4))
-   Using cached pytz-2015.6-py2.py3-none-any.whl
- Collecting requests==2.8.1 (from -r metadataQA/requirements.txt (line 5))
-   Using cached requests-2.8.1-py2.py3-none-any.whl
- Requirement already satisfied: six==1.10.0 in ./venv/lib/python2.7/site-packages (from -r metadataQA/requirements.txt (line 6))
- Collecting wheel==0.24.0 (from -r metadataQA/requirements.txt (line 7))
-   Using cached wheel-0.24.0-py2.py3-none-any.whl
- Installing collected packages: lxml, objectpath, pymarc, pytz, requests, wheel
-   Found existing installation: wheel 0.29.0
-     Uninstalling wheel-0.29.0:
-       Successfully uninstalled wheel-0.29.0
- Successfully installed lxml-3.4.4 objectpath-0.5 pymarc-3.0.4 pytz-2015.6 requests-2.8.1 wheel-0.24.0
+        Collecting lxml==3.4.4 (from -r metadataQA/requirements.txt (line 1))
+        Collecting objectpath==0.5 (from -r metadataQA/requirements.txt (line 2))
+          Using cached objectpath-0.5-py2.py3-none-any.whl
+        Collecting pymarc==3.0.4 (from -r metadataQA/requirements.txt (line 3))
+        Collecting pytz==2015.6 (from -r metadataQA/requirements.txt (line 4))
+          Using cached pytz-2015.6-py2.py3-none-any.whl
+        Collecting requests==2.8.1 (from -r metadataQA/requirements.txt (line 5))
+          Using cached requests-2.8.1-py2.py3-none-any.whl
+        Requirement already satisfied: six==1.10.0 in ./venv/lib/python2.7/site-packages (from -r metadataQA/requirements.txt (line 6))
+        Collecting wheel==0.24.0 (from -r metadataQA/requirements.txt (line 7))
+          Using cached wheel-0.24.0-py2.py3-none-any.whl
+        Installing collected packages: lxml, objectpath, pymarc, pytz, requests, wheel
+          Found existing installation: wheel 0.29.0
+           Uninstalling wheel-0.29.0:
+              Successfully uninstalled wheel-0.29.0
+        Successfully installed lxml-3.4.4 objectpath-0.5 pymarc-3.0.4 pytz-2015.6 requests-2.8.1 wheel-0.24.0
 ```
 The response will tell you either if something was installed or if it was already installed.
 
 ### Step 3: Review of the Metadata Harvest Script
 
-With your virtual environment running, and your dependencies installed, you're ready to go. Let's take a look first at the Python script we will be running:
+With your virtual environment running, and your Python Harvest script dependencies installed, you're ready to go. Let's take a look first at the Python script we will be running before jumping in:
 
+*metadataQA/harvest/oaiharvest.py* (if you want to look on your screen, use `open metadataQA/harvest/oaiharvest.py`, this will open the file in your laptop's default text editor).
 
 ```python
 import urllib2
