@@ -9,27 +9,37 @@
 - Generate some Metadata Harvests
 - Use new Bash skills to explore those Harvests/data dumps
 
+## Requirements
+
+- Bash Shell
+- Python >2.7.x OR 3.x.x
+- Copy of the [Workshop GitHub Repository](https://github.com/dpla/Metadata-Analysis-Workshop) on your Laptop (Grab via Git or ask the Workshop leader for a thumbdrive with the files)
+
+## Lesson
+
 **Table of Contents**
 
-* Overview of Metadata Harvest & Metadata Breakers
-* Harvest Step 1: Check Python, Pip, VirtualEnv
-*
+* [Overview of Metadata Harvest & Metadata Breakers]()
+* [Harvest Step 1: Check Python, Pip, VirtualEnv]()
+* [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements]()
+* [Harvest Step 3: Review of the Metadata Harvest Script]()
+* [Harvest Step 4: Harvest Data from an OAI-PMH Feed]()
+* [Harvest Step 5: Take a Peak at the Harvested Metadata]()
+* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options]()
 
 ### Overview
 
-Basically, the harvest and analysis Python scripts explored in the rest of this workshop run by first harvesting a full metadata dump of any OAI-PMH feed data, across collections, from the OAI-PMH endpoint. This metadata harvest is stored locally. Then, the analyses occur by running the analysis scripts (with some options available for type of analysis) on that data dump. This generates reports across all collections unless explicitly set in the analysis options.
+The Metadata Harvest and Analysis Python scripts explored in the rest of this workshop run by first harvesting a full metadata dump of any OAI-PMH feed data from the OAI-PMH endpoint. This metadata harvest is stored locally. Then, the analyses occur by running the analysis scripts (with some options available for type of analysis) on that data dump. This generates reports across all collections or subsets as explicitly set in the harvest and analysis options.
 
-This requires that the metadata be exposed via an OAI-PMH feed (other APIs, Solr Indices, and data publication methods are supported experimentally - ask Christina later about this) through which the metadata is exposed. Luckily for this DPLA workshop, that's already a requirement for involvement in DPLA.
+This requires that the metadata be exposed via an OAI-PMH feed (other APIs, Solr Indices, and data publication methods are supported experimentally - we will touch briefly on other options later) through which the metadata is exposed. Luckily for this DPLA workshop, that's already a common occurrence for DPLA Provider Data (thanks, Repox).
 
-To speed up this process, we're working on a hosted version of these analysis scripts that copies the data dumps to a database that is then queried (in place of pulling full json data onto your local system). This is still in development.
+To speed up this process, I'm working on a hosted version of these analysis scripts that copies the data dumps to a database that is then queried (in place of pulling full XML data onto your local system). This is still in development. If this ends up being something you would like to see happen, please ping me.
 
 ### Step 1: Check Python, Pip, VirtualEnv Installation/Versions
 
-This should have occured before the workshop, but we're going to run through this quickly know, just in case.
+For these harvest and analysis Python scripts to run, we need to check that Python is installed and the version being used. This should have occurred before the workshop, but we're going to run through this quickly now.
 
-For these harvest and analysis Python scripts to run, we need to check that Python is installed and the version being used.
-
-In your shell used for the previous lesson, type the following command:
+In your shell used for the previous lesson (thanks Gretchen), type the following command:
 
 ```bash
 $ python --version
@@ -137,6 +147,7 @@ The response will tell you either if something was installed or if it was alread
 ### Step 3: Review of the Metadata Harvest Script
 
 With your virtual environment running, and your dependencies installed, you're ready to go. Let's take a look first at the Python script we will be running:
+
 
 ```python
 import urllib2
@@ -249,7 +260,6 @@ if __name__ == "__main__":
     print("Wrote out %d records" % recordCount)
 ```
 
-
 ### Step 4: Harvest Data from an OAI-PMH Feed
 
 You only need to run the Metadata Harvest Python script as often as you want the most recent data. It can take a while and can take up considerable space on your local machine, so consider re-writing the same file with the most recent data (instead of saving multiple data dumps).
@@ -275,3 +285,9 @@ Retrieving project Billie Jean Isbell
 What this script does is first query for all the unique collections in our SharedShelf instance, then iterate over each collection to grab the data. The data grabbed for each collection describes each digital object therein and, where possible, matches the collection-specific metadata field code to the metadata field text name. Where there isn't a text name for the metadata field in the collection, the field code is returned.
 
 This can take up to 10 minutes to run. Wait until it is complete before moving to analysis.
+
+### Step 5: Take a Peak at the Harvested Metadata
+
+
+
+### Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options
