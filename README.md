@@ -13,7 +13,7 @@ Welcome to the open repository, documentation and materials for the DPLAfest 201
 
 ## About the Workshop
 
-The DPLAfest 2017 DPLA Metadata Analysis Bootcamp for Hubs & Partners will be held **1 PM to 5 PM, Wednesday, April 19, 2017 at the Chicago Public Library’s Harold Washington Library Center** (enter at 401 S. Plymouth Street and read more about space logistics [here](https://dp.la/info/get-involved/dplafest/april-2017/travel/)). Exact room number TBA (we will update this repository and email registered participants).
+The DPLAfest 2017 DPLA Metadata Analysis Bootcamp for Hubs & Partners will be held **1 PM to 5 PM, Wednesday, April 19, 2017 at the Chicago Public Library’s Harold Washington Library Center** (enter at 401 S. Plymouth Street and read more about space logistics [here](https://dp.la/info/get-involved/dplafest/april-2017/travel/)). We will meet for the workshop in the Reception Room. The workshop will be followed by a small reception for Hub members in the South Hall.
 
 This workshop is a registration-only event for DPLA Hubs & Partners. For registration information or other logistical questions before the event, please email Gretchen Gueguen, DPLA Data Services Coordinator and workshop organizer: [gretchen (at) dp (dot) la](mailto:gretchen@dp.la).
 
