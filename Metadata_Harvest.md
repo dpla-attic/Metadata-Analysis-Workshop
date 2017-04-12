@@ -20,12 +20,12 @@
 **Table of Contents**
 
 * [Overview of Metadata Harvest & Metadata Breakers](#overview)
-* [Harvest Step 1: Check Python, Pip, VirtualEnv](#step-1-check-python-pip-virtualEnv-installationversions)
-* [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements]()
-* [Harvest Step 3: Review of the Metadata Harvest Script](#step-2-activate-the-python-virtual-environment--install-script-requirements)
-* [Harvest Step 4: Harvest Data from an OAI-PMH Feed]()
-* [Harvest Step 5: Take a Peak at the Harvested Metadata]()
-* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options]()
+* [Harvest Step 1: Check Python, Pip, VirtualEnv](#step-1-check-python-pip-virtualenv-installationversions)
+* [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements](#step-2-activate-the-python-virtual-environment--install-script-requirements)
+* [Harvest Step 3: Review of the Metadata Harvest Script](#step-3-review-of-the-metadata-harvest-script)
+* [Harvest Step 4: Harvest Data from an OAI-PMH Feed](#step-4-harvest-data-from-an-oai-pmh-feed)
+* [Harvest Step 5: Take a Peak at the Harvested Metadata](#step-5-take-a-peek-at-the-harvested-metadata)
+* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options](#step-6-planning-harvests-data-dump-management-non-oai-harvest-options)
 
 ### Overview
 
@@ -410,7 +410,7 @@ This may take a few minutes. Depending on our internet connection and the size o
 
 If you got through the above relatively quickly, try harvesting another OAI-PMH dataset to your local computer - you can use one of the datasets specified in our [harvested-metadata README.md](harvested-metadata/README.md) or your own OAI-PMH feed. Remember to save the -o or output to your `test` directory.
 
-### Step 5: Take a Peak at the Harvested Metadata
+### Step 5: Take a Peek at the Harvested Metadata
 
 At this step, we should all have some harvest OAI-PMH Metadata on our local computers - either through using the Harvest python script above or, if network connectivity isn't what it should be, through havign a copy of this Workshop's Repository on your computer (check out the [harvested-metadata](harvested-metadata/) subdirectory for pre-generated OAI-PMH data dumps.)
 
