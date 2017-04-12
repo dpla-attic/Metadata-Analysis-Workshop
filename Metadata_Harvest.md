@@ -357,30 +357,139 @@ Let's first create a `test` directory to store your data to (so it doesn't clash
 ```bash
 (venv)$ pwd
       /Users/Christina/Projects/Metadata-Analysis-Workshop/
+(venv)$ mkdir test
+(venv)$ ls
+      Bash.md			README.md		metadataQA
+      Metadata_Breakers.md	harvested-metadata	test
+      Metadata_Harvest.md	images
 ```
+
+Now we are going to use the harvestOAI.py script we just reviewed to pull the following set from an OAI-PMH feed provider (remember to use the _tab autocomplete_ bash trick here to lessen your typing!). First, let's use the help switch or flag to see what the script requests:
 
 ```bash
-(venv)$ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
+(venv)$ python metadataQA/harvest/harvestOAI.py --help
+      usage: harvestOAI.py [-h] [-l LINK] [-o FNAME] [-f FROMDATE] [-u UNTIL]
+                     [-m MDPREFIX] [-s SETNAME]
+
+      optional arguments:
+        -h, --help            show this help message and exit
+        -l LINK, --link LINK  OAI-PMH URL
+        -o FNAME, --filename FNAME write repository to file
+        -f FROMDATE, --from FROMDATE harvest records from this date YYYY-MM-DD
+        -u UNTIL, --until UNTIL harvest records until this date YYYY-MM-DD
+        -m MDPREFIX, --mdprefix MDPREFIX use the specified metadata format
+        -s SETNAME, --setName SETNAME harvest the specified OAI-PMH set
 ```
 
-Fill this is with your email, your SharedShelf password, and the place where you'd like to store the data dump locally (here, it is "data/output.json"). The response should be like the following:
+Using this, we can construct a OAI-PMH Harvest that grabs the Qualified Dublin Core (`oai_qdc`) feed for the Jack Bradley Photojournalism Collection from Bradley University (`bra_jack`) and saves it to `test/bra_jack.oai.qdc.xml`:
 
 ```bash
-(venv)$ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
-Writing records to data/output.json from SharedShelf.
-Retrieving project Obama Visual Iconography
-Retrieving project Political Americana
-Retrieving project Vicos
-Retrieving project Billie Jean Isbell
-...
+(venv)$ python metadataQA/harvest/harvestOAI.py -l 'http://collections.carli.illinois.edu/oai/oai.php' -m 'oai_qdc' -s 'bra_jack' -o 'test/bra_jack.oai.qdc.xml'
+      Writing records to test/bra_jack.oai.qdc.xml from repository http://collections.carli.illinois.edu/oai/oai.php
+      Using url:http://collections.carli.illinois.edu/oai/oai.php?verb=ListRecords&set=bra_jack&metadataPrefix=oai_qdc
+      	 getFile ... ctions.carli.illinois.edu/oai/oai.php?verb=ListRecords&set=bra_jack&metadataPrefix=oai_qdc
+      	 getFile ... i.php?verb=ListRecords&resumptionToken=bra_jack:200:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... i.php?verb=ListRecords&resumptionToken=bra_jack:400:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... i.php?verb=ListRecords&resumptionToken=bra_jack:601:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... i.php?verb=ListRecords&resumptionToken=bra_jack:801:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:1001:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:1201:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:1401:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:1601:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:1801:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:2001:bra_jack:0000-00-00:9999-99-99:oai_qdc
+      	 getFile ... .php?verb=ListRecords&resumptionToken=bra_jack:2201:bra_jack:0000-00-00:9999-99-99:oai_qdc
+
+      Read 397343 bytes (1.00 compression)
+      Wrote out 2223 records
 ```
 
-What this script does is first query for all the unique collections in our SharedShelf instance, then iterate over each collection to grab the data. The data grabbed for each collection describes each digital object therein and, where possible, matches the collection-specific metadata field code to the metadata field text name. Where there isn't a text name for the metadata field in the collection, the field code is returned.
+This may take a few minutes. Depending on our internet connection and the size of the dataset, this script can take up to 5 minutes to run. But you need to wait until this is complete before moving to Analysis on that harvested dataset.
 
-This can take up to 10 minutes to run. Wait until it is complete before moving to analysis.
+#### Independent Exercise:
+
+If you got through the above relatively quickly, try harvesting another OAI-PMH dataset to your local computer - you can use one of the datasets specified in our [harvested-metadata README.md](harvested-metadata/README.md) or your own OAI-PMH feed. Remember to save the -o or output to your `test` directory.
 
 ### Step 5: Take a Peak at the Harvested Metadata
 
+At this step, we should all have some harvest OAI-PMH Metadata on our local computers - either through using the Harvest python script above or, if network connectivity isn't what it should be, through havign a copy of this Workshop's Repository on your computer (check out the [harvested-metadata](harvested-metadata/) subdirectory for pre-generated OAI-PMH data dumps.)
 
+Depending on time, we can use our brand new bash skills to take a peek at these files. They will be too large to open in most traditional editors or GUI (Graphical User Interface) tools, but bash can help with thisself.
+
+For example, the `head` command can let us see a certain number of lines of the file:
+
+```bash
+(venv)$ head -10 harvested-metadata/springfield.oai.qdc.xml
+      <?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2015-10-11T00:35:52Z</responseDate> <ListRecords>
+      <record><header status="deleted"><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/0</identifier><datestamp>2012-02-08</datestamp><setSpec>p15370coll2</setSpec></header>
+      </record><record><header><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/1</identifier><datestamp>2014-01-08</datestamp><setSpec>p15370coll2</setSpec></header>
+      <metadata>
+      <oai_qdc:qualifieddc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:oai_qdc="http://worldcat.org/xmlschemas/qdc-1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://worldcat.org/xmlschemas/qdc-1.0/ http://worldcat.org/xmlschemas/qdc/1.0/qdc-1.0.xsd http://purl.org/net/oclcterms http://worldcat.org/xmlschemas/oclcterms/1.4/oclcterms-1.4.xsd">
+      <dc:title>Amos Alonzo Stagg, ca. 1891</dc:title>
+      <dc:description>A photograph of Amos Alonzo Stagg, ca. 1891, while a student at the International Young Men's Christian Association Training School, now known as Springfield College. Stagg graduated  in 1891  and  served as an assistant physical education instructor at Springfield College from 1890-1892. He started the football program at Springfield College and played in one of the first public basketball game, being the only faculty member to score a &quot;basket ball goal&quot; in their 5 to 1 loss to the students. His football teams at Springfield College were known as &quot;Stagg's Eleven&quot; or the &quot;Stubby Christians&quot;. During the two years he coached and played football at Springfield College, the &quot;Stubby Christians&quot; went 10-11-1 and played in one of the first indoor football games in Madison Square Garden against the Yale Consolidated team on December 12, 1890. In a career spanning more than 50 years, Stagg came to be known as the &quot;Grand Old Man of Football&quot;. He coached football at the University of Chicago (Chicago, Ill.) from 1892-1932 and at the College of  the Pacific from 1933 until his retirement in 1946. Over his career he won 314 games. Amos Alonzo Stagg died in 1965 at the age of 102.</dc:description>
+      <dc:subject>Springfield College--Students; Springfield College--Alumni and alumnae; International Young Men's Christian Association Training School (Springfield, Mass.); Springfield College;</dc:subject>
+      <dc:subject>Stagg, Amos Alonzo, 1862-1965; Football; Coaching;</dc:subject>
+      <dc:publisher>Springfield College</dc:publisher>
+```
+
+Alternatively, `tail` can let us see the last few lines of a file:
+
+```bash
+(venv)$ tail -10 harvested-metadata/springfield.oai.qdc.xml
+      <dcterms:extent>22 Pages</dcterms:extent>
+      <dc:language>en-US</dc:language>
+      <dc:relation>The Springfield Student</dc:relation>
+      <dc:relation>52</dc:relation>
+      <dc:relation>16</dc:relation>
+      <dc:rights>Text and images are owned, held, or licensed by Springfield College and are available for personal, non-commercial, and educational use, provided that ownership is properly cited. A credit line is required and should read: Courtesy of Springfield College, Babson Library, Archives and Special Collections. Any commercial use without written permission from Springfield College is strictly prohibited. Other individuals or entities other than, and in addition to, Springfield College may also own copyrights and other propriety rights. The publishing, exhibiting, or broadcasting party assumes all responsibility for clearing reproduction rights and for any infringement of United States copyright law.</dc:rights>
+      <dc:identifier>http://cdm16122.contentdm.oclc.org/cdm/ref/collection/p16122coll6/id/10117</dc:identifier></oai_qdc:qualifieddc>
+      </metadata>
+      </record>
+      </ListRecords></OAI-PMH>
+```
+
+`cat` opens up the entirety of the file for review in your shell, but with files of this size, this tends to be less helpful (you can always type `Ctrl+C` to exit from this screen):
+
+```bash
+(venv)$ cat harvested-metadata/springfield.oai.qdc.xml
+... (XML zooming past)
+```
+(type `Ctrl+C` to exit from this screen if you're stuck)
+
+Finally (for this workshop), there is the bash command `less`, which allows you to page through the results of a file in a shell editor (use your arrow keys or your mouse to scroll, and hit 'q' to exit):
+
+```bash
+(venv)$ less harvested-metadata/springfield.oai.qdc.xml
+    <?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2015-10-11T00:35:52Z</responseDate> <ListRecords>
+    <record><header status="deleted"><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/0</identifier><datestamp>2012-02-08</datestamp><setSpec>p15370coll2</setSpec></header>
+    </record><record><header><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/1</identifier><datestamp>2014-01-08</datestamp><setSpec>p15370coll2</setSpec></header>
+    <metadata>
+    <oai_qdc:qualifieddc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:oai_qdc="http://worldcat.org/xmlschemas/qdc-1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://worldcat.org/xmlschemas/qdc-1.0/ http://worldcat.org/xmlschemas/qdc/1.0/qdc-1.0.xsd http://purl.org/net/oclcterms http://worldcat.org/xmlschemas/oclcterms/1.4/oclcterms-1.4.xsd">
+    <dc:title>Amos Alonzo Stagg, ca. 1891</dc:title>
+    <dc:description>A photograph of Amos Alonzo Stagg, ca. 1891, while a student at the International Young Men's Christian Association Training School, now known as Springfield College. Stagg graduated  in 1891  and  served as an assistant physical education instructor at Springfield College from 1890-1892. He started the football program at Springfield College and played in one of the first public basketball game, being the only faculty member to score a &quot;basket ball goal&quot; in their 5 to 1 loss to the students. His football teams at Springfield College were known as &quot;Stagg's Eleven&quot; or the &quot;Stubby Christians&quot;. During the two years he coached and played football at Springfield College, the &quot;Stubby Christians&quot; went 10-11-1 and played in one of the first indoor football games in Madison Square Garden against the Yale Consolidated team on December 12, 1890. In a career spanning more than 50 years, Stagg came to be known as the &quot;Grand Old Man of Football&quot;. He coached football at the University of Chicago (Chicago, Ill.) from 1892-1932 and at the College of  the Pacific from 1933 until his retirement in 1946. Over his career he won 314 games. Amos Alonzo Stagg died in 1965 at the age of 102.</dc:description>
+    <dc:subject>Springfield College--Students; Springfield College--Alumni and alumnae; International Young Men's Christian Association Training School (Springfield, Mass.); Springfield College;</dc:subject>
+    <dc:subject>Stagg, Amos Alonzo, 1862-1965; Football; Coaching;</dc:subject>
+    <dc:publisher>Springfield College</dc:publisher>
+    <dcterms:created>1891</dcterms:created>
+    <dc:identifier>ms507-01-01-02-001</dc:identifier>
+    <dc:identifier>SC21444</dc:identifier>
+    <dc:format>Image/jpg</dc:format>
+    <dc:type>Image</dc:type>
+    <dc:format>Image/tiff</dc:format>
+    <dcterms:isPartOf>Amos Alonzo Stagg Papers</dcterms:isPartOf>
+    harvested-metadata/springfield.oai.qdc.xml
+```
+
+There are plenty of other Bash commands that can let you interact with these big files, but we pulled them primarily to serve to our Python Analysis script - let's take a final minute to think about how we can best manage this process.
 
 ### Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options
+
+As stated above, these Harvest scripts can take a while to execute, and the outputs can be rather large. So you don't want to pull them all the time. Some options include:
+
+1. Pulling at a regular interval (once a month, perhaps) for analysis purposes, but with the recognition that the analysis will be a little bit behind the current state of the live dataset.
+2. Look to compressing (using Zip or Tar) these files and serving somewhere like GitHub (if the compressed file is smaller than 100MB). This allows you quicker access to shared data dumps across computers, and it means you can leave a computer/server/other somewhere just pulling those data dumps in regular intervals.
+3. Be wary of keeping multiple Harvest data dumps of the same dataset on one laptop - i.e., don't run (unless you really mean to) something like `harvestOAI.py -l 'http://MyOAIfeed' -o 'data/DataSet1.oai.dc.xml' -m 'oai_dc'` then a few days later `harvestOAI.py -l 'http://MyOAIfeed' -o 'data/DataSet1_copy2.oai.dc.xml' -m 'oai_dc'` etc. Instead, look to use something like Git if you need data dump versioning. This sort of process, not thought out, could take a lot of space on your computer.
+
+Are there other approaches you can think of to managing these Harvested datasets?
+
+Finally, the metadataQA library is not limited to OAI-PMH, though that is the most stable script in the Harvest subdirectory. There is the capability to harvest (for analysis) data from [the DPLA API](metadataQA/harvest/harvestDPLA.py) (we will see an example of this later), from the [SharedShelf (Artstor) API](metadataQA/harvest/harvestSharedShelf.py), and test scripts exist for harvesting from Solr as well as Fedora 4. On deck for expansion is harvesting from a ResourceSync source as well as Z39.50 for MARC stores. If you're interested in any of these, please drop me a line and let's stay in touch.
