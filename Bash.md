@@ -47,7 +47,6 @@ Either using Git, curl, the GitHub interface or thumbdrives passed around before
 
 Quick grab of the Workshop Repo (through whatever method), then unzip as needed.
 
-
 ### \*nix Shell & Bash Introduction
 
 What is a command-line interface (CLI)? Where does bash interact with this? What is bash?

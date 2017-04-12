@@ -13,7 +13,7 @@
 
 - Bash Shell
 - Python >2.7.x OR 3.x.x
-- Copy of the [Workshop GitHub Repository](https://github.com/dpla/Metadata-Analysis-Workshop) on your Laptop (Grab via Git or ask the Workshop leader for a thumbdrive with the files)
+- Copy of the [Workshop GitHub Repository](https://github.com/dpla/Metadata-Analysis-Workshop) on your Laptop (Grab via Git or ask the Workshop leader for a thumb-drive with the files)
 
 ## Lesson
 
@@ -33,11 +33,11 @@ The Metadata Harvest and Analysis Python scripts explored in the rest of this wo
 
 This requires that the metadata be exposed via an OAI-PMH feed (other APIs, Solr Indices, and data publication methods are supported experimentally - we will touch briefly on other options later) through which the metadata is exposed. Luckily for this DPLA workshop, that's already a common occurrence for DPLA Provider Data (thanks, Repox).
 
-To speed up this process, I'm working on a hosted version of these analysis scripts that copies the data dumps to a database that is then queried (in place of pulling full XML data onto your local system). This is still in development. If this ends up being something you would like to see happen, please ping me.
+*Nota bene*: To speed up this process, I'm working on a hosted version of these analysis scripts that copies the data dumps to a database that is then queried (in place of pulling full XML data onto your local system). This is still in development. If this ends up being something you would like to see happen or could support, please ping me.
 
 ### Step 1: Check Python, Pip, VirtualEnv Installation/Versions
 
-For these harvest and analysis Python scripts to run, we need to check that Python is installed and the version being used. This should have occurred before the workshop, but we're going to run through this quickly now.
+For these harvest and analysis Python scripts to run, we need to check that Python is installed and verify the version being used. This should have occurred before the workshop, but we're going to run through this quickly now.
 
 In your shell used for the previous lesson, type the command `python --version`:
 
@@ -46,6 +46,8 @@ $ python --version
   Python 2.7.13
 ```
 
+You're strongly recommended to proceed with Python 2.7 or greater. These scripts have recently been refactored to also work with Python 3 (3.6), but this is relatively new work.
+
 Python 2.7.9 or greater (or Python 3) comes installed with Pip, a package manager for Python. To check Pip, type the command `pip --version`:
 
 ```bash
@@ -53,9 +55,11 @@ $ pip --version
   pip 9.0.1 from /usr/local/lib/python2.7/site-packages (python 2.7)
 ```
 
+You'll need Python and Pip. If you don't have either pip, please go to this [Workshop Repository's Main Page](README.md) and use the links there to perform an installation quickly - or partner up with someone near you who has Python and Pip installed.
+
 Next, in our shell, we want to change into our directory where these repository materials are stored. You should have downloaded and navigated through this in the last lesson. **If not**:
 
-Clone this repository (https://github.com/cul-it/sharedshelf-metadata.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'). Note: this requires **the recursive flag** to get all the materials (if you didn't install Git, just ask the workshop leader for the a thumbdrive with the materials):
+Clone this repository (https://github.com/cul-it/sharedshelf-metadata.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'). Note: this requires **the recursive flag** to get all the materials (if you didn't install Git, just ask the workshop leader for the a thumb-drive with the materials):
 
 ```bash
 $ git clone --recursive https://github.com/dpla/Metadata-Analysis-Workshop.git
@@ -69,7 +73,7 @@ $ git clone --recursive https://github.com/dpla/Metadata-Analysis-Workshop.git
   Submodule path 'metadataQA': checked out '0e44b393bc11e00d8a3e24959be45e3f229e90c4'
 ```
 
-With the workshop materials repository on your local machine (you'll need to remember where you downloaded or cloned this directory), lets change into that directory and make sure we are in the right spot using the `cd`, `pwd`, and `ls` commands we just learned:
+With the workshop materials repository on your local machine (you'll need to remember where you downloaded or cloned this directory), let's change into that directory and make sure we are in the right spot using the `cd`, `pwd`, and `ls` commands we just learned:
 
 ```bash
 $ cd Metadata-Analysis-Workshop/
@@ -102,7 +106,7 @@ $ virtualenv venv
   Installing setuptools, pip, wheel...done.
 ```
 
-You should only have to do the above once (you're done for the rest of this workshop), whereas the follow should be redone when you run the scripts or need to capture updates.
+You should only have to do the above once (you're done for the rest of this workshop), whereas the following should be redone whenever you run the scripts or need to capture updates.
 
 ### Step 2: Activate the Python Virtual Environment & Install Script Requirements
 
@@ -121,7 +125,7 @@ Depending on your shell, you will see something indicating your working in the '
 (venv) $
 ```
 
-We now want to install all the Python scripts library requirements to this virtual environment. _Note: you should only ever have to run this command once when you start and then whenever there are updates to the scripts._ Type `pip install -r metadataQA/requirements.txt` (use tab to autocomplete filenames & confirm you're in the right repository!):
+We now want to install all the Python scripts library requirements to this virtual environment. _Note: you should only ever have to run this command once when you start and, after that, only when there are updates to the scripts._ Type `pip install -r metadataQA/requirements.txt` (use tab to autocomplete filenames & confirm you're in the right repository!):
 
 ```bash
 (venv)$ pip install -r metadataQA/requirements.txt
@@ -146,12 +150,15 @@ The response will tell you either if something was installed or if it was alread
 
 ### Step 3: Review of the Metadata Harvest Script
 
-With your virtual environment running, and your Python Harvest script dependencies installed, you're ready to go. Let's take a look first at the Python script we will be running before jumping in:
+With your virtual environment running, and your Python Harvest script dependencies installed, you're ready to go. Let's take a look first at the Python script we will be running before jumping in - but do not worry, we're not here to learn Python, just take a peek at the tool we will be using.
 
-*metadataQA/harvest/oaiharvest.py* (if you want to look on your screen, use `open metadataQA/harvest/oaiharvest.py`, this will open the file in your laptop's default text editor).
+*If you want to look on your screen, use `open metadataQA/harvest/harvestOAI.py`. This will open the file in your laptop's default text editor. Alternatively, you can look at [the file in GitHub in your web browser](http://www.github.com/dpla/Metadata-Analysis-Workshop/metadataQA/harvest).*
 
+*metadataQA/harvest/harvestOAI.py*
 ```python
-import urllib2
+"""Harvest Metadata from an OAI-PMH Feed."""
+from __future__ import unicode_literals
+import requests
 import zlib
 import time
 import re
@@ -159,63 +166,77 @@ import xml.dom.pulldom
 import xml.dom.minidom
 import codecs
 from argparse import ArgumentParser
+from builtins import chr
 
-nDataBytes, nRawBytes, nRecoveries, maxRecoveries = 0, 0, 0, 3
+nDataBytes = 0
+nRawBytes = 0
+oaistart = """<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2015-10-11T00:35:52Z</responseDate> <ListRecords>\n"""
+oaiend = """\n</ListRecords></OAI-PMH>\n"""
 
 
-def getFile(link, command, verbose=1, sleepTime=0):
-    global nRecoveries, nDataBytes, nRawBytes
-    if sleepTime:
-        time.sleep(sleepTime)
+def getFile(link, command, sleepTime=0):
+    """This generates the OAI-PMH link and retrieves the XML data over HTTP."""
+    time.sleep(sleepTime)
+
+    # Set URL with OAI-PMH Command for Retrieval
     remoteAddr = link + '?verb=%s' % command
-    if verbose:
-        print("\r", "getFile ...'%s'" % remoteAddr[-90:])
+    print("\t getFile ... %s" % remoteAddr[-90:])
+
+    # Handle HTTP Response (Including Common Errors) from OAI-PMH Endpoint
     try:
-        remoteData = urllib2.urlopen(remoteAddr).read()
-    except urllib2.HTTPError as exValue:
-        if exValue.code == 503:
-            retryWait = int(exValue.hdrs.get("Retry-After", "-1"))
+        resp = requests.get(remoteAddr)
+        if resp.status_code != 200 and resp.status_code != 301:
+            resp.raise_for_status()
+        elif resp.status_code == 301:
+            print("%s redirected to %s ." % remoteAddr, resp.url)
+            return(getFile(resp.url, command))
+        elif '/xml' not in resp.headers.get('content-type'):
+            print("ERROR: content-type=%s" % (resp.headers.get('content-type')))
+            exit()
+        else:
+            remoteData = resp.text
+    except requests.HTTPError as exValue:
+        status_code = exValue.response.status_code
+        if status_code == 503:
+            retryWait = int(resp.headers.get("Retry-After", "-1"))
             if retryWait < 0:
-                return None
-            print('Waiting %d seconds' % retryWait)
-            return getFile(link, command, 0, retryWait)
-        print(exValue)
-        if nRecoveries < maxRecoveries:
-            nRecoveries += 1
-            return getFile(link, command, 1, 60)
-        return
+                print("OAI-PMH Service %s Unavailable (Status 503)." % link)
+                exit()
+            else:
+                print('Waiting %d seconds' % retryWait)
+                return(getFile(link, command, retryWait))
+        elif status_code == 404:
+            print("404 Not Found Error with OAI-PMH URL: %s" % remoteAddr)
+            exit()
+        else:
+            print(exValue)
+            exit()
+    return(remoteData.encode('utf8'))
+
+
+def zipRemoteData(remoteData):
+    # Count Bytes for Output Report, Compress Where Able for Efficiency.
+    global nRawBytes, nDataBytes
     nRawBytes += len(remoteData)
     try:
         remoteData = zlib.decompressobj().decompress(remoteData)
     except:
         pass
     nDataBytes += len(remoteData)
-    mo = re.search('<error *code=\"([^"]*)">(.*)</error>', remoteData)
-    if mo:
-        print("OAIERROR: code=%s '%s'" % (mo.group(1), mo.group(2)))
+    return(remoteData)
+
+
+def checkOAIErrors(remoteData):
+    # Check for OAI-PMH Errors in the XML Response
+    oaiErr = re.search(b'<error *code=\"([^"]*)">(.*)</error>', remoteData)
+    if oaiErr:
+        print("OAIERROR: code=%s '%s'" % (oaiErr.group(1), oaiErr.group(2)))
+        exit()
     else:
-        return remoteData
+        return(remoteData)
 
-if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument("-l", "--link", dest="link", help="OAI-PMH URL",
-                        default="https://ecommons.cornell.edu/dspace-oai/request")
-    parser.add_argument("-o", "--filename", dest="filename",
-                        help="write repository to file", default="output.xml")
-    parser.add_argument("-f", "--from", dest="fromDate",
-                        help="harvest records from this date yyyy-mm-dd")
-    parser.add_argument("-u", "--until", dest="until",
-                        help="harvest records until this date yyyy-mm-dd")
-    parser.add_argument("-m", "--mdprefix", dest="mdprefix", default="oai_dc",
-                        help="use the specified metadata format")
-    parser.add_argument("-s", "--setName", dest="setName",
-                        help="harvest the specified set")
-    args = parser.parse_args()
 
-    if not args.link.startswith('http'):
-        args.link = 'http://' + args.link
-    print("Writing records to %s from repository %s" % (args.filename, args.link))
-    verbOpts = ''
+def generateOAIopts(args, verbOpts=''):
     if args.setName:
         verbOpts += '&set=%s' % args.setName
     if args.fromDate:
@@ -224,42 +245,107 @@ if __name__ == "__main__":
         verbOpts += '&until=%s' % args.until
     if args.mdprefix:
         verbOpts += '&metadataPrefix=%s' % args.mdprefix
+    return(verbOpts)
 
-    print("Using url:%s" % args.link + '?ListRecords' + verbOpts)
 
-    ofile = codecs.lookup('utf-8')[-1](file(args.filename, 'wb'))
-    ofile.write('<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2015-10-11T00:35:52Z</responseDate> <ListRecords>\n')
-    data = getFile(args.link, 'ListRecords' + verbOpts)
-
+def handleEncodingErrors(inputFile):
+    # Handle OAI-PMH XML Encoding Errors
     # from http://boodebr.org/main/python/all-about-python-and-unicode#UNI_XML
     RE_XML_IL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
                 u'|' + \
                 u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' %\
-                (unichr(0xd800), unichr(0xdbff), unichr(0xdc00),
-                 unichr(0xdfff), unichr(0xd800), unichr(0xdbff),
-                 unichr(0xdc00), unichr(0xdfff), unichr(0xd800),
-                 unichr(0xdbff), unichr(0xdc00), unichr(0xdfff))
-    dataClean = re.sub(RE_XML_IL, "?", data)
+                (chr(0xd800), chr(0xdbff), chr(0xdc00),
+                 chr(0xdfff), chr(0xd800), chr(0xdbff),
+                 chr(0xdc00), chr(0xdfff), chr(0xd800),
+                 chr(0xdbff), chr(0xdc00), chr(0xdfff))
+    outputFile = re.sub(RE_XML_IL, u"?", inputFile.decode('utf-8'))
+    return(outputFile)
 
+
+def writeHarvest(link, data, ofile):
     recordCount = 0
-    while dataClean:
-        events = xml.dom.pulldom.parseString(dataClean)
-        for (event, node) in events:
-            if event == "START_ELEMENT" and node.tagName == 'record':
-                events.expandNode(node)
-                node.writexml(ofile)
-                recordCount += 1
-        more = re.search('<resumptionToken[^>]*>(.*)</resumptionToken>',
-                         dataClean)
+    while data:
+        # I need a better way to handle python 2/3 interop here, but not finding it.
+        try:
+            events = xml.dom.pulldom.parseString(data.encode('utf-8'))
+            for (event, node) in events:
+                if event == "START_ELEMENT" and node.tagName == 'record':
+                    events.expandNode(node)
+                    node.writexml(ofile)
+                    recordCount += 1
+        except TypeError as e:
+            events = xml.dom.pulldom.parseString(data)
+            for (event, node) in events:
+                if event == "START_ELEMENT" and node.tagName == 'record':
+                    events.expandNode(node)
+                    node.writexml(ofile)
+                    recordCount += 1
+        more = re.search('<resumptionToken[^>]*>(.*)</resumptionToken>', data)
         if not more:
             break
-        data = getFile(args.link, "ListRecords&resumptionToken=%s" % more.group(1))
-        dataClean = re.sub(RE_XML_IL, "?", data)
+        else:
+            data = getFile(link, "ListRecords&resumptionToken=%s" % more.group(1))
+            data = handleEncodingErrors(data)
+    return(recordCount)
 
-    ofile.write('\n</ListRecords></OAI-PMH>\n'), ofile.close()
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("-l", "--link", dest="link", help="OAI-PMH URL",
+                        default="https://ecommons.cornell.edu/dspace-oai/request")
+    parser.add_argument("-o", "--filename", dest="fname",
+                        help="write repository to file", default="harvest.xml")
+    parser.add_argument("-f", "--from", dest="fromDate",
+                        help="harvest records from this date YYYY-MM-DD")
+    parser.add_argument("-u", "--until", dest="until",
+                        help="harvest records until this date YYYY-MM-DD")
+    parser.add_argument("-m", "--mdprefix", dest="mdprefix", default="oai_dc",
+                        help="use the specified metadata format")
+    parser.add_argument("-s", "--setName", dest="setName",
+                        help="harvest the specified OAI-PMH set")
+    args = parser.parse_args()
+
+    # Check OAI-PMH URL is valid
+    if not args.link.startswith('http'):
+        args.link = 'http://' + args.link
+
+    # Start Harvest Process
+    print("Writing records to %s from repository %s" % (args.fname, args.link))
+
+    # Generate the OAI-PMH URL with Provided Arguments
+    verbOpts = generateOAIopts(args)
+    print("Using url:%s" % args.link + '?verb=ListRecords' + verbOpts)
+
+    # Create Start of XML Output File
+    ofile = codecs.lookup('utf-8')[-1](open(args.fname, 'wb'))
+    ofile.write(oaistart)
+
+    # Grab & Clean XML Records from OAI Feed
+    remoteData = getFile(args.link, 'ListRecords' + verbOpts)
+    data = zipRemoteData(remoteData)
+    data = checkOAIErrors(data)
+    dataClean = handleEncodingErrors(data)
+
+    # Iterate over Records, ResumptionTokens, & Write to File
+    recordCount = writeHarvest(args.link, dataClean, ofile)
+
+    # Finish Harvest Writer
+    ofile.write(oaiend)
+    ofile.close()
+
+    # Print Simple Reports from Harvest
     print("\nRead %d bytes (%.2f compression)" % (nDataBytes, float(nDataBytes) / nRawBytes))
     print("Wrote out %d records" % recordCount)
+
+
+if __name__ == "__main__":
+    main()
+
 ```
+
+We will start at the bottom and go through the methods here to understand what this scripts is up to. Basically, we take your base OAI-PMH URL, pull together the indicate variables - what metadata prefix and set (if wanted) to pull from, a start or end date to pull from - then create a full OAI-PMH URL. We use a Python library to issue a HTTP request on that URL and capture the XML response, which we then write to the output file. Then we check for an OAI-PMH resumptionToken, and repeat this process as needed.
+
+What we end up with is a copy of the OAI-PMH XML across resumptionTokens saved as a file on our local machine. 
 
 ### Step 4: Harvest Data from an OAI-PMH Feed
 
