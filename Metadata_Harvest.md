@@ -122,7 +122,7 @@ $ source venv/bin/activate
 Depending on your shell, you will see something indicating your working in the 'venv' virtual environment now, namely, the name of the virtualenv you created in parentheses before the bash command start:
 
 ```bash
-(venv) $
+(venv)$
 ```
 
 We now want to install all the Python scripts library requirements to this virtual environment. _Note: you should only ever have to run this command once when you start and, after that, only when there are updates to the scripts._ Type `pip install -r metadataQA/requirements.txt` (use tab to autocomplete filenames & confirm you're in the right repository!):
@@ -345,22 +345,29 @@ if __name__ == "__main__":
 
 We will start at the bottom and go through the methods here to understand what this scripts is up to. Basically, we take your base OAI-PMH URL, pull together the indicate variables - what metadata prefix and set (if wanted) to pull from, a start or end date to pull from - then create a full OAI-PMH URL. We use a Python library to issue a HTTP request on that URL and capture the XML response, which we then write to the output file. Then we check for an OAI-PMH resumptionToken, and repeat this process as needed.
 
-What we end up with is a copy of the OAI-PMH XML across resumptionTokens saved as a file on our local machine. 
+What we end up with is a copy of the OAI-PMH XML across resumptionTokens saved as a file on our local machine.
+
+Nothing in this script - or the Analysis script - is particularly difficult, but you'll see that they offer us just the little bit of duct tape we need to do some metadata analysis we can't generally do in our repositories.
 
 ### Step 4: Harvest Data from an OAI-PMH Feed
 
-You only need to run the Metadata Harvest Python script as often as you want the most recent data. It can take a while and can take up considerable space on your local machine, so consider re-writing the same file with the most recent data (instead of saving multiple data dumps).
+You only need to run the Metadata Harvest Python script as often as you need the most recent data. Be aware: this script can take a while to complete, and it can take up considerable space on your local machine to store these data dumps, so consider re-writing the same file with the most recent data (instead of saving multiple data dumps). What does that look like? Let's jump into that now.
 
 Let's first create a `test` directory to store your data to (so it doesn't clash with the sample data captured and doesn't interfere with the GitHub repository management):
 
 ```bash
-(venv) $ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
+(venv)$ pwd
+      /Users/Christina/Projects/Metadata-Analysis-Workshop/
+```
+
+```bash
+(venv)$ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
 ```
 
 Fill this is with your email, your SharedShelf password, and the place where you'd like to store the data dump locally (here, it is "data/output.json"). The response should be like the following:
 
 ```bash
-(venv) $ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
+(venv)$ python scripts/artstorharvest.py -e cmh329@cornell.edu -p yourPassword -o data/output.json
 Writing records to data/output.json from SharedShelf.
 Retrieving project Obama Visual Iconography
 Retrieving project Political Americana
