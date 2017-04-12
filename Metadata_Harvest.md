@@ -340,7 +340,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 ```
 
 We will start at the bottom and go through the methods here to understand what this scripts is up to. Basically, we take your base OAI-PMH URL, pull together the indicate variables - what metadata prefix and set (if wanted) to pull from, a start or end date to pull from - then create a full OAI-PMH URL. We use a Python library to issue a HTTP request on that URL and capture the XML response, which we then write to the output file. Then we check for an OAI-PMH resumptionToken, and repeat this process as needed.
