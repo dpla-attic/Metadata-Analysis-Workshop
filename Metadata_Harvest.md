@@ -19,10 +19,10 @@
 
 **Table of Contents**
 
-* [Overview of Metadata Harvest & Metadata Breakers]()
-* [Harvest Step 1: Check Python, Pip, VirtualEnv]()
+* [Overview of Metadata Harvest & Metadata Breakers](#overview)
+* [Harvest Step 1: Check Python, Pip, VirtualEnv](#step-1-check-python-pip-virtualEnv-installationversions)
 * [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements]()
-* [Harvest Step 3: Review of the Metadata Harvest Script]()
+* [Harvest Step 3: Review of the Metadata Harvest Script](#step-2-activate-the-python-virtual-environment--install-script-requirements)
 * [Harvest Step 4: Harvest Data from an OAI-PMH Feed]()
 * [Harvest Step 5: Take a Peak at the Harvested Metadata]()
 * [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options]()
