@@ -12,7 +12,7 @@
 ## Requirements
 
 - Bash Shell
-- Python >2.7.x OR 3.x.x
+- Python >=2.7.x OR >=3.5.x
 - Copy of the [Workshop GitHub Repository](https://github.com/dpla/Metadata-Analysis-Workshop) on your Laptop (Grab via Git or ask the Workshop leader for a thumb-drive with the files)
 
 ## Lesson
