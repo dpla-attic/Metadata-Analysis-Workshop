@@ -33,7 +33,6 @@ Either using Git, curl, the GitHub interface or thumbdrives passed around before
 * [Finding & Opening Things](#finding--opening-things)
     * [find, find -name -type, find -iname, find -not](#find-find--name--type-find--iname-find--not)
     * [nano, vi, open](#nano-vi-open)
-    * [cat, head -n, tail -n, tail -f, more, less](#cat-head--n-tail--n-tail--f-more-less)
     * [grep, grep -c, grep -o, grep -i, grep -oP, grep -v](#grep-grep--c-grep--o-grep--i-grep--op-grep--v)
 * [Other Commands](#other-commands)
     * [wc, wc -l, wc -w, wc -m](#wc-wc--l-wc--w-wc--m)
@@ -46,7 +45,6 @@ Either using Git, curl, the GitHub interface or thumbdrives passed around before
 ### Preparation
 
 Quick grab of the Workshop Repo (through whatever method), then unzip as needed.
-
 
 ### \*nix Shell & Bash Introduction
 
@@ -353,44 +351,6 @@ total 65408
 -rw-r--r--@ 1 Christina  staff   144K Feb 20 06:13 CUlecturetapes_metadata_ingest-ready.csv
 -rw-r--r--@ 1 Christina  staff    13B Feb 20 06:13 gallic.txt
 ```
-
-The files 829-0.txt and 33504-0.txt holds the content of book 829 and #3504 on Project Gutenberg. But we've forgot which books, so we try the `cat` command to read the text of the first file:
-
-```bash
-$ cat 829-0.txt
-```
-
-The terminal window erupts and the whole book cascades by (it is printed to your terminal). Great, but we can't really make any sense of that amount of text. (Hit Ctrl+C )
-
-Often we just want a quick glimpse of the first or the last part of a file to get an idea about what the file is about. To let us do that, the Unix shell provides us with the commands `head` and `tail`.
-
-$ head 829-0.txt
-The Project Gutenberg eBook, Gulliver's Travels, by Jonathan Swift
-
-This eBook is for the use of anyone anywhere at no cost and with
-almost no restrictions whatsoever.  You may copy it, give it away or
-re-use it under the terms of the Project Gutenberg License included
-with this eBook or online at www.gutenberg.org
-
-This provides a view of the first ten lines, whereas tail 829-0.txt provides a perspective on the last ten lines:
-
-$ tail 829-0.txt
-
-Most people start at our Web site which has the main PG search facility:
-     http://www.gutenberg.org
-This Web site includes information about Project Gutenberg-tm,
-including how to make donations to the Project Gutenberg Literary
-Archive Foundation, how to help produce our new eBooks, and how to
-subscribe to our email newsletter to hear about new eBooks.
-
-If ten lines is not enough (or too much), we would check man head to see if there exists an option to specify the number of lines to get (there is: head -n 20 will print 20 lines).
-Another way to navigate files is to view the contents one screen at a time. Type less 829-0.txt to see the first screen, spacebar to see the next screen and so on, then q to quit (return to the command prompt).
-
-
-$ less 829-0.txt
-
-
-Like many other shell commands, the commands cat, head, tail and less can take any number of arguments (they can work with any number of files). We will see how we can get the first lines of several files at once. To save some typing, we introduce a very useful trick first.
 
 
 #### grep, grep -c, grep -o, grep -i, grep -oP, grep -v
