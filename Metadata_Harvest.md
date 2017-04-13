@@ -24,8 +24,8 @@
 * [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements](#step-2-activate-the-python-virtual-environment--install-script-requirements)
 * [Harvest Step 3: Review of the Metadata Harvest Script](#step-3-review-of-the-metadata-harvest-script)
 * [Harvest Step 4: Harvest Data from an OAI-PMH Feed](#step-4-harvest-data-from-an-oai-pmh-feed)
-* [Harvest Step 5: Take a Peak at the Harvested Metadata](#step-5-take-a-peek-at-the-harvested-metadata)
-* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options](#step-6-planning-harvests-data-dump-management-non-oai-harvest-options)
+* [Harvest Step 5: Take a Peek at the Harvested Metadata](#step-5-take-a-peek-at-the-harvested-metadata)
+* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options](#step-6-planning-harvests-data-dump-management--non-oai-harvest-options)
 
 ### Overview
 
