@@ -302,13 +302,13 @@ Renaming a directory works in the same way as renaming a file. Try using the mv 
 Click 'details' to see the answer
 
 
-<detail>
+<details>
 
 ```bash
 $ mv firstdir backup
 ```
 
-<detail>
+<details>
 
 
 If the last argument you give to the mv command is a directory, not a file, the file given in the first argument will be moved to that directory. Try using the `mv` command to move the file gulliver-backup.txt into the backupfolder.
