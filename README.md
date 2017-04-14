@@ -25,10 +25,10 @@ We ask that all participants come to the workshop ready to dive in by reviewing 
 
 Time | Lesson | Leader | Lesson Materials
 -----|--------|--------|-----------------
-**1-1:15 PM** | Intros & Welcome, Housekeeping, etc. (15 minutes)| [Gretchen](mailto:gretchen@dp.la) | TBD
+**1-1:15 PM** | Intros & Welcome, Housekeeping, etc. (15 minutes)| [Gretchen](mailto:gretchen@dp.la) | n/a
 **1:15-1:45 PM** | DPLA MAP 4.0 and the basic requirements/crosswalk & mapping goals (30 minutes) | [Gretchen](mailto:gretchen@dp.la) | [http://bit.ly/dpla-metadata-bootcamp](http://bit.ly/dpla-metadata-bootcamp)
-**1:45-2:15 PM** | Command line basics (30 minutes) | [Audrey](mailto:audrey@dp.la) | TBD
-**2:15-2:45 PM** | Harvesting OAI feed at the command line (30 minutes) | Christina | TBD
+**1:45-2:15 PM** | Command line basics (30 minutes) | [Audrey](mailto:audrey@dp.la) | [Bash_Exercises.md](Bash_Exercises.md)
+**2:15-2:45 PM** | Harvesting OAI feed at the command line (30 minutes) | Christina | [Metadata_Harvest.md](Metadata_Harvest.md)
 **2:45-3 PM** | break (15 minutes) | n/a | n/a
 **3-4:30 PM** | Metadata analysis (90 minutes, including working time) | Christina | TBD
 **4:30-5 PM** | Other DPLA metadata analysis tools to explore (30 minutes) | [Gretchen](mailto:gretchen@dp.la) | [http://bit.ly/dpla-metadata-bootcamp](http://bit.ly/dpla-metadata-bootcamp)

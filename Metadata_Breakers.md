@@ -1,3 +1,32 @@
+# Metadata Harvests, DPLAFest 2017 DPLA Metadata Analysis Workshop
+
+*2:15-2:45  PM, led by [Christina Harlow, DataOps at Stanford University Libraries](mailto:cmharlow@gmail.com)*
+
+## Goals
+
+- Understand structure of Metadata Harvest & Metadata Breakers scripts
+- Walk through the OAI-PMH Metadata Harvest Python script
+- Generate some Metadata Harvests
+- Use new Bash skills to explore those Harvests/data dumps
+
+## Requirements
+
+- Bash Shell
+- Python >=2.7.x OR >=3.5.x
+- Copy of the [Workshop GitHub Repository](https://github.com/dpla/Metadata-Analysis-Workshop) on your Laptop (Grab via Git or ask the Workshop leader for a thumb-drive with the files)
+
+## Lesson
+
+**Table of Contents**
+
+* [Overview of Metadata Harvest & Metadata Breakers](#overview)
+* [Harvest Step 1: Check Python, Pip, VirtualEnv](#step-1-check-python-pip-virtualenv-installationversions)
+* [Harvest Step 2: Activate the Python Virtual Environment & Install Script Requirements](#step-2-activate-the-python-virtual-environment--install-script-requirements)
+* [Harvest Step 3: Review of the Metadata Harvest Script](#step-3-review-of-the-metadata-harvest-script)
+* [Harvest Step 4: Harvest Data from an OAI-PMH Feed](#step-4-harvest-data-from-an-oai-pmh-feed)
+* [Harvest Step 5: Take a Peek at the Harvested Metadata](#step-5-take-a-peek-at-the-harvested-metadata)
+* [Harvest Step 6: Planning Harvests, Data Dump Management, & Non-OAI Harvest Options](#step-6-planning-harvests-data-dump-management--non-oai-harvest-options)
+
 ### Analyze Your Local SharedShelf API Data - Overall View
 
 The most basic analysis to run is an analysis report for all metadata fields in your data dump and how often records with those fields appears. To do this, with your virtual environment activated and in the top level of the sharedshelf-metadata directory on your computer:

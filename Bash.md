@@ -12,9 +12,13 @@
 
 ## Preparation
 
-Either using Git, curl, the GitHub interface or thumbdrives passed around before the session, download this Workshop GitHub Repository to your computer. We'll be using that for the session.
+Either using Git, curl, the GitHub interface or thumbdrives passed around before the session, download this Workshop GitHub Repository to your computer.
 
-## Lesson Questions/Topics:
+Also have the [Bash Exercises](Bash_Exercises.md) handy - that is the primary document you'll be working with.
+
+## Possible Lesson Questions/Topics:
+
+Nota bene: (Not All of this will be Covered; Treat this as a Reference)
 
 **Table of Contents**
 
@@ -60,11 +64,9 @@ What is a command-line interface (CLI)? Where does bash interact with this? What
 
 > What you can quickly learn is how to query lots of data for the information you want super fast. Using Bash or any other shell sometimes feels more like programming than like using a mouse. Commands are terse (often only a couple of characters long), their names are frequently cryptic, and their output is lines of text rather than something visual like a graph. On the other hand, with only a few keystrokes, the shell allows us to combine existing tools into powerful pipelines and handle large volumes of data automatically. This automation not only makes us more productive, but also improves the reproducibility of our workflows by allowing us to repeat them with few simple commands. Also, understanding the basics of the shell is very useful as a foundation before learning to program, since most programming languages necessitate working with the shell." (abridged from Library Carpentry)
 
-#### Basic structure of a Command (command, options/flags, arguments)
+#### Basic Structure of a Command
 
-> "Let's start by opening the shell. This likely results in seeing a black window with a cursor flashing next to a dollar sign. This is our command line, and the $ is the command prompt to show the system is ready for our input. The prompt can look somewhat different from system to system, but it usually ends with a $.
-
-> The $ sign is used to indicate a command to be typed on the command prompt, but we never type the $ sign itself, just what follows after it." (adapted from In the Beginning ... There was the Command Line)
+> "Let's start by opening the shell. This likely results in seeing a black window with a cursor flashing next to a dollar sign. This is our command line, and the $ is the command prompt to show the system is ready for our input. The prompt can look somewhat different from system to system, but it usually ends with a $. The $ sign is used to indicate a command to be typed on the command prompt, but we never type the $ sign itself, just what follows after it." (adapted from In the Beginning ... There was the Command Line)
 
 ```bash
 $ command --option(s) argument(s)
@@ -74,9 +76,9 @@ $ ls --all ~/
 $ ls -a ~/
 ```
 
-#### How to get help understanding a Command
+#### Get Help Understanding a Command
 
-Use the `man` command to invoke the manual page (documentation) for a shell command. For example,
+Use the `man` command to invoke the manual page (documentation) for a shell command.
 
 ```bash
 $ man ls
@@ -99,33 +101,33 @@ DESCRIPTION
 # more text
 ```
 
-displays all the flags/options available to you. Use the spacebar to navigate the manual pages, and q to quit this man output.
+For example, the above example displays all the flags/options available to you. Use the spacebar to navigate the manual pages, and `q` to quit this man output.
 
-Note: this command is for Mac and Linux users only. It does not work directly for Windows users. If you use windows, you can search for the Shell command on http://man.he.net/, and view the associated manual page. You can also use the help switch `--help` after a command to display the help documentation. e.g. `ls --help`
+**Nota bene**: this command is for Mac and Linux users only. It does not work directly for Windows users. If you use windows, you can search for the Shell command on http://man.he.net/, and view the associated manual page. You can also use the help switch `--help` after a command to display the help documentation. e.g. `ls --help`
 
 #### Shell tricks
 
-- tab autocomplete: Hitting tab at any time within the shell will prompt it to attempt to auto-complete the line based on the files or sub-directories in the current directory. Where two or more files have the same characters, the auto-complete will only fill up to the first point of difference, after which we can add more characters, and try using tab again.
-- up + down arrows for previous commands: On a blank command prompt, hit the up arrow key and notice that the previous command you typed appears before your cursor. We can continue pressing the up arrow to cycle through your previous commands.
-- History Command: Use the history command to see a list of all the commands you've entered during the current session. Use the space bar to navigate through pages, and q to quit.
-- Wildcards: Luckily the shell supports wildcards! The ? (matches exactly one character) and * (matches zero or more characters) are probably familiar from library search systems. We can use the * wildcard to write the above head command in a more compact way:
+- **tab autocomplete**: Hitting tab at any time within the shell will prompt it to attempt to auto-complete the line based on the files or sub-directories in the current directory. Where two or more files have the same characters, the auto-complete will only fill up to the first point of difference, after which we can add more characters, and try using tab again.
+- **up + down arrows for previous commands**: On a blank command prompt, hit the up arrow key and notice that the previous command you typed appears before your cursor. We can continue pressing the up arrow to cycle through your previous commands.
+- `history`: Use the `history` command to see a list of all the commands you've entered during the current session. Use the space bar to navigate through pages, and `q` to quit.
+- **Wildcards**: Luckily the shell supports wildcards! The ? (matches exactly one character) and * (matches zero or more characters) are probably familiar from library search systems. We can use the * wildcard to write the commands in a more compact way.
 
 ### Moving around files & directories:
 
-#### pwd
+#### Print Working Directory `pwd`
 
-When working in the shell, you are always somewhere in the computer's file system, in some folder (directory). We will therefore start by finding out where we are by using the `pwd` command, which you can use whenever you are unsure about where you are. It stands for 'print working directory' and the result of the command is printed to your standard output, which is the terminal.
+When working in the shell, you are always somewhere in the computer's file system, in some folder (directory). Find out where you are by using the `pwd` command, which you can use whenever you are unsure. It stands for 'print working directory' and the result of the command is printed to your standard output, which is the terminal.
 
-Let's type `pwd` and hit enter to execute the command:
+Example: type `pwd` and hit enter to execute the command:
 
 ```bash
 $ pwd
 /Users/Christina
 ```
 
-#### ls, ls -A, ls -R, ls -alsh
+#### List Contents `ls`
 
-The output will be a path to your home directory. Let's check if we recognize it by listing the contents of the directory. To do that, we use the `ls` command:
+For example, if you just opened your bash shell and haven't changed your directory yet, use the `ls` command to list the default space - your home directory:
 
 ```bash
 $ ls
@@ -135,7 +137,7 @@ Desktop                  Library                  Presentations            Tools
 Documents                Movies                   Projects                 VirtualBox VMs           nifi-0.7.0
 ```
 
-We may want more information than just a list of files and directories. We can get this by specifying various flags (also known as options or switches) to go with our basic commands.
+If you want more information than just a list of files and directories, you can use various flags (also known as options or switches) to go with our basic commands.
 
 If we type `ls -l` and hit enter, the computer returns a list of files that contains information similar to what we would find in our Finder (Mac) or Explorer (Windows): the size of the files in bytes, the date it was created or last modified, and the file name.
 
@@ -168,7 +170,7 @@ drwxr-xr-x     6 Christina  staff    204 Jun  6  2016 perl5
 
 In everyday usage we are more used to units of measurement like kilobytes, megabytes, and gigabytes. Luckily, there's another flag -h that when used with the -l option, use unit suffixes: Byte, Kilobyte, Megabyte, Gigabyte, Terabyte and Petabyte in order to reduce the number of digits to three or less using base 2 for sizes.
 
-Now `ls -h` won't work on its own. When we want to combine two flags, we can just run them together. So, by typing `ls -lh` and hitting enter we receive an output in a human-readable format (note: the order here doesn't matter).
+Now `ls -h` won't work on its own. When we want to combine two flags, we can just run them together. So, by typing `ls -lh` and hitting enter we receive an output in a human-readable format (note: the order of the flags here doesn't matter).
 
 ```bash
 $ ls -lh
@@ -197,9 +199,9 @@ drwxr-xr-x     6 Christina  staff   204B Jun  6  2016 perl5
 -rw-r--r--     2 Christina  staff   8.0K Sep 30 12:05 test.json
 ```
 
-#### cd, cd /, cd ./wherever, cd ../.., cd ~
+#### Change Directory `cd`
 
-We've now spent a great deal of time in our home directory. Let's go somewhere else. We can do that through the `cd` or Change Directory command:
+To move from your current directory (if you've not run anything else in the exercises above, you'll still be in your home directory) you can use the `cd` or Change Directory command:
 
 (Note: On Windows and Mac, by default, the case of the file/directory doesn't matter. On Linux it does.)
 
@@ -214,16 +216,16 @@ $ pwd
 /Users/Christina/Desktop
 ```
 
-If something had gone wrong, however, the command would have told you. Let's see by trying to move into a (hopefully) non-existing directory:
+If something had gone wrong, however, the command will tell you. Let's see by trying to move into a (we hope) non-existing directory:
 
 ```bash
 $ cd "bibframe plan"
 cd: The directory 'bibframe plan' does not exist
 ```
 
-Notice that we surrounded the name by quotation marks. The arguments given to any shell command are separated by spaces, so a way to let them know that we mean 'one single thing called "bibframe plane"', not 'two different things', is to use (single or double) quotation marks.
+Notice that we surrounded the name by quotation marks. The arguments given to any Bash shell command are separated by spaces, so a way to let them know that we mean 'one single thing called "bibframe plan"', not that we mean two different things ('bibframe' and 'plan'), is to use (single or double) quotation marks.
 
-We've now seen how we can do 'down' through our directory structure (as in into more nested directories). If we want to go back, we can type `cd ..` . This moves us 'up' one directory, putting us back where we started. If we ever get completely lost, the command `cd` without any arguments will bring us right back to the home directory, right where we started.
+We've now seen how we can do 'down' through our directory structure (as in into more nested directories). If we want to go back, we can type `cd ..` . This moves us 'up' one directory, putting us back where we started. If we ever get completely lost, the command `cd` without any arguments will bring us right back to the home directory.
 
 To switch back and forth between two directories use: `cd ..` .
 
@@ -231,13 +233,9 @@ To switch back and forth between two directories use: `cd ..` .
 $ cd ..
 ```
 
-*Exercise - Try Exploring on Your Own*
+If at some point you want to open where you are in your Bash shell in a GUI finder, on Mac or Linux, you can type `open .` (the single dot means your current location). On Windows, also try typing `explorer .` to open Explorer for the current directory.
 
-Take 5 minutes to move around the computer, get used to moving in and out of directories, see how different file types appear in the Unix shell. Be sure to use the `pwd` and `cd` commands, and the different flags for the `ls` command you learned so far.
-
-If you run Windows, also try typing `explorer .` to open Explorer for the current directory (the single dot means "current directory"). If you're on Mac or Linux, try `open .` instead.
-
-#### mkdir, mkdir -p
+#### Make Direcotry : `mkdir`
 
 As well as navigating directories, we can interact with files on the command line: we can read them, open them, run them, and even edit them.
 
