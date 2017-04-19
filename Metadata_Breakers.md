@@ -26,9 +26,9 @@
 * [Analysis Step 1: Activate the Python Virtual Environment & Install Script Requirements](#step-1-activate-the-python-virtual-environment--install-script-requirements)
 * [Analysis Step 2: Review of the Metadata Breaker/Analysis Scripts](#step-2-review-of-the-metadata-breakeranalysis-scripts)
 * [Analysis Step 3: Generate a Field Usage Report for a Dataset](#analysis-step-3-generate-a-field-usage-report-for-a-dataset)
-* [Analysis Step 4: Generate Field-specific Reports]()
-* [Analysis Step 5: Writing These Reports to File]()
-* [Examples & Practice]
+* [Analysis Step 4: Generate Field-specific Reports](#analysis-step-4-generate-field-specific-reports)
+* [Analysis Step 5: Writing These Reports to File](#analysis-step-5-writing-these-reports-to-file)
+* [Examples & Practice](#examples--practice)
 
 ### Overview
 
@@ -955,7 +955,7 @@ Writes the output we saw before in our shell into the `harvested-metadata/carli_
 
 Using the above, work through how you would uncover the following - either with the sample `harvested-metadata` or your own harvested data (click the details section below each to find one possible answer):
 
-1.	Number of records
+#### Number of records
 
 <details>
 
@@ -967,7 +967,7 @@ Tells us that set has 93 records total.
 
 </details>
 
-2.	Existence of sets
+#### Existence of sets
 
 <details>
 
@@ -975,7 +975,7 @@ This is a trick question - you shouldn't use these scripts to uncover this, but 
 
 </details>
 
-3.	What are all the unique elements/XPATH nodes in this data stream
+#### What are all the unique elements/XPATH nodes in this data stream
 
 <details>
 
@@ -983,7 +983,7 @@ Run the general report - it will tell you all the unique fields - nested or not 
 
 </details>
 
-4.	Are required DPLA elements present and mappable:
+#### Are required DPLA elements present and mappable:
 
 <details>
 
@@ -999,7 +999,7 @@ If you want to capture a list of all records that are missing a field, you can u
 
 </details>
 
-4a.	Title
+##### Title
 
 <details>
 
@@ -1013,7 +1013,7 @@ or
 
 </details>
 
-4b.	isShownAt
+##### isShownAt
 
 <details>
 
@@ -1021,7 +1021,7 @@ Use the `-e` (element) or `-x` (xpath) flag as appropriate (DC vs MODS) with the
 
 </details>
 
-4c.	dataProvider
+##### dataProvider
 
 <details>
 
@@ -1029,7 +1029,7 @@ Use the `-e` (element) or `-x` (xpath) flag as appropriate (DC vs MODS) with the
 
 </details>
 
-4d.	Rights
+##### Rights
 
 <details>
 
@@ -1037,7 +1037,7 @@ Use the `-e` (element) or `-x` (xpath) flag as appropriate (DC vs MODS) with the
 
 </details>
 
-4e.	thumbnail
+##### thumbnail
 
 <details>
 
@@ -1045,13 +1045,15 @@ Use the `-e` (element) or `-x` (xpath) flag as appropriate (DC vs MODS) with the
 
 </details>
 
+#### Further Questions & Analysis
+
 All of the above give you the ability to browse and review the data in a faster manner than using something like OpenRefine with huge datasets or reviewing the OAI-PMH feeds in a web browser. But they don't automate how you make a decision, only how you can review and analyze the data to get to a decision. Work through the following questions and figure out how the above can help you determine the following (note: this will not be the same for each person or institution).
 
-5.	Is date mapped to the same field consistently? Does it look like a creation date or a date of digitization?
-6.	Is creator mapped to the same field consistently?
-7.	Is geographic information in the same field consistently (if included)?
-8.	Are properties used in a semantically correct way (publisher is a good example, you can use `grep` to look for the digitization institution's name).
-9.	Are DCMI types included? If not, could they be derived from `format` or another field (`title`?)?
-10.	Do page-level records exist? (e.g. looking for records with title only, titles that contain the work “page”)
-11.	Does full-text exist? (e.g. looking for extra-long description fields)
-12.	Does all of the content meet collecting guidelines? (e.g. a qualitative analysis of titles)
+* Is date mapped to the same field consistently? Does it look like a creation date or a date of digitization?
+* Is creator mapped to the same field consistently?
+* Is geographic information in the same field consistently (if included)?
+* Are properties used in a semantically correct way (publisher is a good example, you can use `grep` to look for the digitization institution's name).
+* Are DCMI types included? If not, could they be derived from `format` or another field (`title`?)?
+* Do page-level records exist? (e.g. looking for records with title only, titles that contain the work “page”)
+* Does full-text exist? (e.g. looking for extra-long description fields)
+* Does all of the content meet collecting guidelines? (e.g. a qualitative analysis of titles)
