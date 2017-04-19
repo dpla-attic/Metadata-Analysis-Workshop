@@ -23,9 +23,9 @@
 **Table of Contents**
 
 * [Overview of Metadata Harvest & Metadata Breakers](#overview)
-* [Analysis Step 1: Activate the Python Virtual Environment & Install Script Requirements]()
-* [Analysis Step 2: Review of the Metadata Breaker/Analysis Scripts]()
-* [Analysis Step 3: Generate a Field Usage Report for a Dataset]()
+* [Analysis Step 1: Activate the Python Virtual Environment & Install Script Requirements](#step-1-activate-the-python-virtual-environment--install-script-requirements)
+* [Analysis Step 2: Review of the Metadata Breaker/Analysis Scripts](#step-2-review-of-the-metadata-breakeranalysis-scripts)
+* [Analysis Step 3: Generate a Field Usage Report for a Dataset](#analysis-step-3-generate-a-field-usage-report-for-a-dataset)
 * [Analysis Step 4: Generate Field-specific Reports]()
 * [Analysis Step 5: Writing These Reports to File]()
 * [Examples & Practice]
@@ -94,7 +94,9 @@ If you're having issues with this step, go back to the [Metadata Harvest section
 
 Let's take a look first at two of these Python scripts we will be running before jumping in. We are primarily interested in the OAI-DC Analysis option (`metadataQA/analysis/oaidc_analysis.py`) and the MODS Analysis option (`metadataQA/analysis/mods_analysis.py`)
 
-*If you want to look on your screen, use `open metadataQA/analysis/oaidc_analysis.py`. This will open the OAI-DC Analysis file in your laptop's default text editor. Alternatively, you can look at [the file in GitHub in your web browser](http://www.github.com/dpla/Metadata-Analysis-Workshop/metadataQA/analysis).*
+*If you want to look on your screen, use `open metadataQA/analysis/oaidc_analysis.py`. This will open the OAI-DC Analysis file in your laptop's default text editor. Alternatively, you can look at [the file in GitHub in your web browser](https://github.com/cmh2166/metadataQA/tree/master/analysis).*
+
+<details>
 
 *metadataQA/analysis/oaidc_analysis.py*
 ```python
@@ -385,6 +387,8 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+</details>
 
 ### Analysis Step 3: Generate a Field Usage Report for a Dataset
 
