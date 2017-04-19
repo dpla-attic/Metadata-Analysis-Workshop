@@ -31,7 +31,7 @@
 
 The Metadata Harvest and Analysis Python scripts explored in the rest of this workshop run by first harvesting a full metadata dump of any OAI-PMH feed data from the OAI-PMH endpoint. This metadata harvest is stored locally. Then, the analyses occur by running the analysis scripts (with some options available for type of analysis) on that data dump. This generates reports across all collections or subsets as explicitly set in the harvest and analysis options.
 
-This requires that the metadata be exposed via an OAI-PMH feed (other APIs, Solr Indices, and data publication methods are supported experimentally - we will touch briefly on other options later) through which the metadata is exposed. Luckily for this DPLA workshop, that's already a common occurrence for DPLA Provider Data (thanks, Repox).
+This requires that the metadata be exposed via an OAI-PMH feed (other APIs, Solr Indices, and data publication methods are supported experimentally - we will touch briefly on other options later). Luckily for this DPLA workshop, that's already a common occurrence for DPLA Provider Data (thanks, Repox).
 
 *Nota bene*: To speed up this process, I'm working on a hosted version of these analysis scripts that copies the data dumps to a database that is then queried (in place of pulling full XML data onto your local system). This is still in development. If this ends up being something you would like to see happen or could support, please ping me.
 
