@@ -482,6 +482,7 @@ Nota bene: often this script will fail with a 'cannot find identifier for record
 **Exercise:** Take a few minutes and run general reports on the sample datasets in the harvested-metadata directory or on the metadata you harvested yourself. Click the 'details' section below for a list of sample lines to run if you need help.
 
 <details>
+
 ```bash
 (venv) $ python metadataQA/analysis/oaidc_analysis.py harvested-metadata/carli_wiu_digimgc.oai.qdc.xml
 1000 records processed
