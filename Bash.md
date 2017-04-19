@@ -227,22 +227,22 @@ Notice that we surrounded the name by quotation marks. The arguments given to an
 
 We've now seen how we can do 'down' through our directory structure (as in into more nested directories). If we want to go back, we can type `cd ..` . This moves us 'up' one directory, putting us back where we started. If we ever get completely lost, the command `cd` without any arguments will bring us right back to the home directory.
 
-To switch back and forth between two directories use: `cd ..` .
-
 ```bash
 $ cd ..
 ```
 
 If at some point you want to open where you are in your Bash shell in a GUI finder, on Mac or Linux, you can type `open .` (the single dot means your current location). On Windows, also try typing `explorer .` to open Explorer for the current directory.
 
-#### Make Direcotry : `mkdir`
+#### Make Directory `mkdir`
 
 As well as navigating directories, we can interact with files on the command line: we can read them, open them, run them, and even edit them.
 
-We will try a few basic ways to interact with files. Let's first move into the CUL-MWG-Workshop-master directory on your desktop (if you don't have this directory, please ask for help).
+We will try a few basic ways to interact with files. Let's first move into the Metadata-Analysis-Workshop directory on your desktop (if you don't have this directory, please ask for help).
 
 ```bash
+# Change to our home directory
 $ cd
+# Change to our CUL-MWG-Workshop directory
 $ cd Desktop/CUL-MWG-Workshop-master
 $ pwd
 /Users/Christina/Desktop/CUL-MWG-Workshop-master
@@ -257,15 +257,17 @@ $ cd firstdir
 
 Here we used the `mkdir` command (meaning 'make directories') to create a directory named 'firstdir'. Then we moved into that directory using the `cd` command.
 
-#### rmdir, rmdir -p, rm, rm -rf
+#### Remove Files &amp; Directories `rmdir` & `rm`
 
 Finally, onto deleting. We won't use it now, but if you do want to delete a file, for whatever reason, the command is `rm`, or remove.
 
-Using wildcards, we can even delete lots of files. And adding the -r flag we can delete folders with all their content.
+Using wildcards, we can even delete lots of files. And adding the `-r` flag we can delete folders with all their content.
 
-Unlike deleting from within our graphical user interface, there is no warning, no recycling bin from which you can get the files back and no other undo options! For that reason, please be very careful with rm and extremely careful with `rm -r`.
+Unlike deleting from within our graphical user interface, there is no warning, no recycling bin from which you can get the files back and no other undo options! For that reason, please be _very careful_ with rm and extremely careful with `rm -r`.
 
-#### cp, cp -r, mv
+If you want to remove a directory, you can use `rmdir` - but it will only work if the directory is empty. If the directory is not empty, you need to remove the files (using `rm`) first.
+
+#### Copy & Move Files `cp` & `mv`
 
 We may also want to change the file name to something more descriptive. We can move it to a new name by using the `mv` or move command, giving it the old name as the first argument and the new name as the second argument:
 
@@ -323,52 +325,62 @@ This would also work:
 $ mv gulliver-backup.txt backup/gulliver-backup.txt
 ```
 
-
-
 ### Finding & Opening Things
 
-#### find, find -name -type, find -iname, find -not
+#### cat, head
 
-#### nano, vi, open
+At the top level of the Metadata-Analysis-Workshop directory, we want to take a peek at some of the harvested-metadata files. However, these can sometimes be large enough to make GUI editors not work.
 
-#### cat, head -n, tail -n, tail -f, more, less
-
-If you are in firstdir, use `cd ..` to get back to the CUL-MWG-Workshop-master directory.
-Here there are copies of two public domain books downloaded from Project Gutenberg along with other files we will cover later.
+Lets ry the `cat` command to open the file:
 
 ```bash
-$ ls -lh
-total 65408
--rw-r--r--@ 1 Christina  staff   3.6M Feb 20 06:13 2014-01-31_JA-africa.tsv
--rw-r--r--@ 1 Christina  staff   7.4M Feb 20 06:13 2014-01-31_JA-america.tsv
--rw-r--r--@ 1 Christina  staff   1.4M Feb 20 06:13 2014-02-02_JA-britain.tsv
--rw-r--r--@ 1 Christina  staff    13M Feb 20 06:13 2017-ecommons-CU-etds.csv
--rw-r--r--@ 1 Christina  staff   5.0M Feb 20 06:13 2017-ecommons-CUL-community.csv
--rw-r--r--@ 1 Christina  staff   582K Feb 20 06:13 33504-0.txt
--rw-r--r--@ 1 Christina  staff   598K Feb 20 06:13 829-0.txt
--rw-r--r--@ 1 Christina  staff   144K Feb 20 06:13 CUlecturetapes_metadata_ingest-ready.csv
--rw-r--r--@ 1 Christina  staff    13B Feb 20 06:13 gallic.txt
+$ cat harvested-metadata/springfield.oai.qdc.xml
+```
+
+The terminal window erupts and the whole XML file cascades by (it is printed to your terminal). Great, but we can't really make any sense of that amount of text. (Hit Ctrl+C if you're stuck in the XML view)
+
+Often we just want a quick glimpse of the first or the last part of a file to get an idea about what the file is about. To let us do that, the Unix shell provides us with the commands `head` and `tail`.
+
+```bash
+$ head harvested-metadata/springfield.oai.qdc.xml
+  <?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2015-10-11T00:35:52Z</responseDate> <ListRecords>
+  <record><header status="deleted"><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/0</identifier><datestamp>2012-02-08</datestamp><setSpec>p15370coll2</setSpec></header>
+  </record><record><header><identifier>oai:cdm16122.contentdm.oclc.org:p15370coll2/1</identifier><datestamp>2014-01-08</datestamp><setSpec>p15370coll2</setSpec></header>
+  <metadata>
+  <oai_qdc:qualifieddc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:oai_qdc="http://worldcat.org/xmlschemas/qdc-1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://worldcat.org/xmlschemas/qdc-1.0/ http://worldcat.org/xmlschemas/qdc/1.0/qdc-1.0.xsd http://purl.org/net/oclcterms http://worldcat.org/xmlschemas/oclcterms/1.4/oclcterms-1.4.xsd">
+  <dc:title>Amos Alonzo Stagg, ca. 1891</dc:title>
+  <dc:description>A photograph of Amos Alonzo Stagg, ca. 1891, while a student at the International Young Men's Christian Association Training School, now known as Springfield College. Stagg graduated  in 1891  and  served as an assistant physical education instructor at Springfield College from 1890-1892. He started the football program at Springfield College and played in one of the first public basketball game, being the only faculty member to score a &quot;basket ball goal&quot; in their 5 to 1 loss to the students. His football teams at Springfield College were known as &quot;Stagg's Eleven&quot; or the &quot;Stubby Christians&quot;. During the two years he coached and played football at Springfield College, the &quot;Stubby Christians&quot; went 10-11-1 and played in one of the first indoor football games in Madison Square Garden against the Yale Consolidated team on December 12, 1890. In a career spanning more than 50 years, Stagg came to be known as the &quot;Grand Old Man of Football&quot;. He coached football at the University of Chicago (Chicago, Ill.) from 1892-1932 and at the College of  the Pacific from 1933 until his retirement in 1946. Over his career he won 314 games. Amos Alonzo Stagg died in 1965 at the age of 102.</dc:description>
+  <dc:subject>Springfield College--Students; Springfield College--Alumni and alumnae; International Young Men's Christian Association Training School (Springfield, Mass.); Springfield College;</dc:subject>
+  <dc:subject>Stagg, Amos Alonzo, 1862-1965; Football; Coaching;</dc:subject>
+  <dc:publisher>Springfield College</dc:publisher>
+```
+
+This provides a view of the first ten lines, whereas `tail harvested-metadata/springfield.oai.qdc.xml` provides a perspective on the last ten lines:
+
+```bash
+$ tail harvested-metadata/springfield.oai.qdc.xml
+  <dcterms:extent>22 Pages</dcterms:extent>
+  <dc:language>en-US</dc:language>
+  <dc:relation>The Springfield Student</dc:relation>
+  <dc:relation>52</dc:relation>
+  <dc:relation>16</dc:relation>
+  <dc:rights>Text and images are owned, held, or licensed by Springfield College and are available for personal, non-commercial, and educational use, provided that ownership is properly cited. A credit line is required and should read: Courtesy of Springfield College, Babson Library, Archives and Special Collections. Any commercial use without written permission from Springfield College is strictly prohibited. Other individuals or entities other than, and in addition to, Springfield College may also own copyrights and other propriety rights. The publishing, exhibiting, or broadcasting party assumes all responsibility for clearing reproduction rights and for any infringement of United States copyright law.</dc:rights>
+  <dc:identifier>http://cdm16122.contentdm.oclc.org/cdm/ref/collection/p16122coll6/id/10117</dc:identifier></oai_qdc:qualifieddc>
+  </metadata>
+  </record>
+  </ListRecords></OAI-PMH>
 ```
 
 
-#### grep, grep -c, grep -o, grep -i, grep -oP, grep -v
+#### Global Regular Expression Print `grep`
 
-Searching for something in one or more files is something we'll often need to do, so let's introduce a command for doing that: `grep` (short for global regular expression print). As the name suggests, it supports regular expressions and is therefore only limited by your imagination, the shape of your data, and - when working with thousands or millions of files - the processing power at your disposal.
-To begin using `grep`, first navigate to the CUL-MWG-Workshop-master directory if not already there. Then create a new directory "results":
-
-
-```bash
-$ mkdir results
-```
+Searching for something in one or more files is something we'll often need to do, so let's introduce a command for doing that: `grep` (short for global regular expression print).
 
 Now let's try our first search:
 
 ```bash
-$ grep metadata *.csv
+$ grep harvest-metadata *.qdc.xml
 ```
-
-Remember that the shell will expand `*.csv` to a list of all the .csv files in the directory. `grep` will then search these for instances of the string "1999" and print the matching rows.
-
 Amend `grep metadata *.csv` to `grep -c metadata *.csv` and hit enter.
 
 ```bash

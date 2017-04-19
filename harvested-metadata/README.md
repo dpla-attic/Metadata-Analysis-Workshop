@@ -31,10 +31,17 @@ We will walk through how to harvest these datasets yourself in the Harvesting Me
 ### Williams College
 
 * OAI-PMH base: http://unbound.williams.edu/oai2
-* metadata schema/prefix: mods
-* harvest filename: williams.oai.mods.xml
+* metadata schema/prefix: mods (however, it is serving DC)
+* harvest filename: williams.oai.dc.xml
 
-### Springfield College Archives and Special Collections (oai_qdc):
+### Florida State University
+
+* OAI-PMH base: http://fsu.digital.flvc.org/oai2
+* metadata schema/prefix: mods
+* setname: fsu_admiralleighpapers
+* harvest filename: fsu_admiral.mods.xml
+
+### Springfield College Archives and Special Collections
 
 * OAI-PMH base: http://cdm16122.contentdm.oclc.org/oai/oai.php
 * metadata schema/prefix: oai_qdc (qualified dublin core)
