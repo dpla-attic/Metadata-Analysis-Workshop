@@ -62,7 +62,7 @@ Refine can import TSV, CSV, Excel, XML, JSON, and Google Data documents as well 
 
 In our DPLA workflows we might typically work with XML data and Open Refine can help us convert that data to a tabular format. However, it requires some clean-up when records have multiple instances of a property. Let's start by uploading a file.
 
-Start with **Create Project** in the menu, then use the button to select a file from your computer. Let's upload the sample file from our workshop documents. This is a file typical of the output of an OAI PMH feed with about 74,000 records. Once you've selected the file click **Next**.
+Start with **Create Project** in the menu, then use the button to select a file from your computer. Let's upload the sample file from our workshop documents. This is a file typical of the output of an OAI PMH feed with about 75,000 records. Once you've selected the file click **Next**.
 
 OpenRefine will then upload the XML file. The amount of time this takes will depend on the size of the files. Very large files may be difficult or even impossible to work with.
 
@@ -81,7 +81,7 @@ Each of the columns in the data have drop-down menus (the upside down triangles)
 
 OpenRefine has two modes of viewing data: Rows and Records. Upon project creation, the default setting is Rows mode, where each row represents a single record in the data set -- in our case, one entry in the database. In Records mode, OpenRefine can group multiple rows as belonging to the same Record in the original XML file. Switching to this mode, we see that the All Data column now shows a number of blank cells. These represent rows that are part of a single record, the start of which is indicated by the numbered row. Multi-row records happen when Refine detects multiple values within the selected record or node.
 
-We also notice that our count of records is considerably higher than the 74,000 or so we expect. This is because, like a database, the first column needs to act as "Key" column, or a column with data that will be unique for each record. If the first column has empty cells, as ours does, these will be erroneously treated as part of a previous record. On the other hand if this column originally had multiple values in the original record, these will now be treated as multiple records. If we toggle back and forth between Records and Rows we also notice that the two views show different totals
+We also notice that our count of records is considerably higher than the 75,000 or so we expect. This is because, like a database, the first column needs to act as "Key" column, or a column with data that will be unique for each record. If the first column has empty cells, as ours does, these will be erroneously treated as part of a previous record. On the other hand if this column originally had multiple values in the original record, these will now be treated as multiple records. If we toggle back and forth between Records and Rows we also notice that the two views show different totals
 
 To combat this, we need to move a unique record identifier to the first column of our OpenRefine Data. This will help make sure that multi-row records stay grouped according to your understanding of a record.
 
@@ -312,7 +312,7 @@ Try out these GREL expressions on the any column of your choice. You don't need 
 ### Adding a new column from another spreadsheet
 Let's imagine that we have a second spreadsheet of the DPLA records for these items. We want to add a column to our spreadsheet with the DPLA identifier.
 
-The first thing we need to do is upload our second spreadsheet. Click **Open** from the top of the refine window and upload the spreadsheet the same way we had previously uploaded our XML file.
+The first thing we need to do is upload our second spreadsheet. Click **Open** from the top of the refine window and upload the spreadsheet the same way we had previously uploaded our XML file. OpenRefine includes the file extension "csv" in the title after a blank space. GREL has difficulty dealing with blank spaces in table names, so let's rename the file. Click on the title name and it should become editable. Remove the final " csv" from the file.
 
 Joining the two spreadsheet relies on finding a key column. These are columns in each spreadsheet that hold identical values. For this example, let's use the `isShownAt` column in the DPLA spreadsheet and the `edm:isShownAt` column in our first spreadsheet.
 
@@ -322,15 +322,15 @@ GREL expressions are written as a function being applied to some kind of data va
 
 To add the new column we are going to use a command called cell.cross. The paramenters required will be the spreadsheet and column names:
 
-`cell.cross("DPLA Spreadsheet", "isShownAt").cells["edm:isShownAt"].value[0]`
+`cell.cross("DPLA_Spreadsheet", "isShownAt").cells["dplaUri"].value[0]`
 
 You can see in the preview window that we now have matching DPLA id numbers for each record.
 
 We can make this expression slightly better by adding some logic to avoid errors when there is not a matching row in the DPLA spreadsheet:
 
-`if (value!='null',cell.cross("Merge Test B", "HESA code").cells["Average Teaching Score"].value[0],'')`
+`if (value!='null',cell.cross("DPLA_Spreadsheet", "isShownAt").cells["dplaUri"].value[0],'')`
 
-This statement now says to add the DPLA id **only if** the **edm:isShownAt** field is populated.
+This statement now says to add the DPLA id **only if** the **isShownAt** field is populated.
 
 ## Validating Data
 
