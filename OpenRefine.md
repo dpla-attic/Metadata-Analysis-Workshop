@@ -1,9 +1,14 @@
-# OpenRefine, DPLA Members Meeting, March 14, 2018
+# OpenRefine Workshop, DPLA Members Meeting, March 14, 2018
 
 *led by [Gretchen Gueguen, Data Services Coordinator, Digital Public Library of America](mailto:gretchen@dp.la)*
+*Based on [an OpenRefine workshop](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OpenRefine.md) created by Scotty Carlson*
+
+## License
+All instructional materials are being made available under a [Creative Commons Attribution license] (https://creativecommons.org/licenses/by/4.0/). Feel free to reuse these materials according to these license terms.
 
 ## Goals of This Module:
-* Basic Data Assessment
+* Introduce Open Refine
+* Basic Data Assessment for DPLA Hubs
 * Data Remediation
 * Data Validation
 * Data Enhancement
@@ -13,7 +18,7 @@ OpenRefine (formerly Google Refine) is a powerful tool for working with messy da
 
 Can OpenRefine be used to create data from scratch? Not really. OpenRefine is built to work with existing data, although projects can be enriched with outside data.
 
-Download links and instructions can be found [here](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/README.md#openrefine-recommended). OpenRefine requires a working Java runtime environment, otherwise the program will not start. Upon launch, OpenRefine will run as a local server, opening in your computer's browser. As long as OpenRefine is running, you can point your browser at either http://127.0.0.1:3333/ or http://localhost:3333/ to use it, even in several browser tabs/windows.
+Download links and instructions can be found [here](). OpenRefine requires a working Java runtime environment, otherwise the program will not start. Upon launch, OpenRefine will run as a local server, opening in your computer's browser. As long as OpenRefine is running, you can point your browser at either http://127.0.0.1:3333/ or http://localhost:3333/ to use it, even in several browser tabs/windows.
 
 ## Module Objectives
 
@@ -38,7 +43,9 @@ Based on these assessment measures, what assessment techniques can be applied to
 
 * Importing Data
 * The OR Interface
+* Clean Up XML in Tabular Format
 * Assessment Tools
+* Analysis for DPLA Compatibility
 * Validating Data
 * Data Remediation
 * Data Enhancement
@@ -55,13 +62,13 @@ Refine can import TSV, CSV, Excel, XML, JSON, and Google Data documents as well 
 
 In our DPLA workflows we might typically work with XML data and Open Refine can help us convert that data to a tabular format. However, it requires some clean-up when records have multiple instances of a property. Let's start by uploading a file.
 
-Start with "Create Project" in the menu, then use the button to select a file from your computer. Let's upload the sample file from our workshop documents. This is a file typical of the output of an OAI PMH feed. Once you've selected the file click "Next."
+Start with **Create Project** in the menu, then use the button to select a file from your computer. Let's upload the sample file from our workshop documents. This is a file typical of the output of an OAI PMH feed with about 74,000 records. Once you've selected the file click **Next**.
 
 OpenRefine will then upload the XML file. The amount of time this takes will depend on the size of the files. Very large files may be difficult or even impossible to work with.
 
 Once the file is uploaded, you must select the XML property that is the parent for the record, so that they can be parsed accurately. Refine presents you with the beginning of the file and you must click on the opening <record> tag. You will be able to tell that you have the correct element selected because the record will be highlighted yellow.
 
-You should now see a parsing window. Here, Refine previews what your data will look like as a table in the main interface. It may look a bit off at this point, but don't worry, we will clean it up in the next step. Just make sure that the values in columns that have values look like they are coming from the correct properties (e.g. creators in one column, dates in another as opposed to seeing several different types of values in a column.) 
+You should now see a preview of what your data will look like as a table in the main interface. It may look a bit off at this point, but don't worry, we will clean it up in the next step. Just make sure that the values in columns that have values look like they are coming from the correct properties (e.g. creators in one column, dates in another as opposed to seeing several different types of values in a column.) 
 
 Click **Create Project**.
 
@@ -72,15 +79,13 @@ Each of the columns in the data have drop-down menus (the upside down triangles)
 
 ### Rows vs. Records
 
-OpenRefine has two modes of viewing data: Rows and Records. Upon project creation, the default setting is Rows mode, where each row represents a single record in the data set -- in our case, one entry in the database. In Records mode, OpenRefine can group multiple rows as belonging to the same Record. Multi-row records happen when Refine detects multiple values within the selected record or node.
+OpenRefine has two modes of viewing data: Rows and Records. Upon project creation, the default setting is Rows mode, where each row represents a single record in the data set -- in our case, one entry in the database. In Records mode, OpenRefine can group multiple rows as belonging to the same Record in the original XML file. Switching to this mode, we see that the All Data column now shows a number of blank cells. These represent rows that are part of a single record, the start of which is indicated by the numbered row. Multi-row records happen when Refine detects multiple values within the selected record or node.
 
-Like a database, the first column needs to act as "Key" column; if the first column has empty cells, as ours does, these will be erroneously treated as part of the previous record:
-
-![refine-3.png](images/refine-3.png)
+We also notice that our count of records is considerably higher than the 74,000 or so we expect. This is because, like a database, the first column needs to act as "Key" column, or a column with data that will be unique for each record. If the first column has empty cells, as ours does, these will be erroneously treated as part of a previous record. On the other hand if this column originally had multiple values in the original record, these will now be treated as multiple records. If we toggle back and forth between Records and Rows we also notice that the two views show different totals
 
 To combat this, we need to move a unique record identifier to the first column of our OpenRefine Data. This will help make sure that multi-row records stay grouped according to your understanding of a record.
 
-Let's identify the column containing the <identifier> element in the OAI <header> and move it to the first position: from the drop-down, select **Edit column** > **Move column to the beginning**. The Records and Rows totals should now be back to 1,633.
+Let's identify the column containing the `<identifier>` element in the OAI `<header>` and move it to the first position: from the drop-down, select **Edit column** > **Move column to the beginning**. The Records and Rows totals should now be equal.
 
 Set the view to Records.
 
@@ -90,27 +95,32 @@ There are several artifacts of the conversion of our XML to a table that we now 
 
 ### Remove Unneccessary Columns
 
-First however, let's remove unnecessary columns. The process of creating the table from our XML created a separate column for every parent element. For example, if our record was in MODS and had a <titleInfo><title> tag, the resulting table would have two columns, one blank one for <titleInfo> and another with the actual values for <title>.
+First however, let's remove unnecessary columns. The process of creating the table from our XML created a separate column for every parent element. For example, if our record was in MODS and had a `<titleInfo><title>` tag, the resulting table would have two columns, one blank one for `<titleInfo>` and another with the actual values for `<title>`.
 
-Go through each column in the spreadsheet and look at the heading. Since the heading contains the entire XPATH for each element, some of them may not fit within the column. Hovering over the column heading for a few seconds will open a small text box with the full title. For each column you want to remove, click the drop-down menu in the heading and choose Edit column -> Remove this column.
+Go through each column in the spreadsheet and look at the heading. Since the heading contains the entire XPATH for each element, some of them may not fit, but hovering over the column heading for a few seconds will open a small text box with the full title. For each column you want to remove, click the drop-down menu in the heading and choose **Edit column** > **Remove this column**.
 
 ### Combine Multiple Properties Into a Single Cell
 
 Once all the unnecessary columns are removed, we can now combine the multi-valued properties into a single cell for each record. 
 
-First, click the drop-down on the OAI <identifier> column and select Facet -> Customized facets -> Facet by blank. Facet information appears in the left hand panel in the OpenRefine interface. The faceted values for *True* are cells that are empty, and the values for *False* shows the fields that do have data. The blank cells here represent rows that hold multiple values for other columns. 
+First, click the drop-down on the OAI `<identifier>` column and select **Facet** > **Customized facets** > **Facet by blank**. Facet information appears in the left hand panel in the OpenRefine interface. The faceted values for *True* are cells that are empty, and the values for *False* shows the fields that do have data. Since each record has only one OAI identifier, the blank cells here represent rows that hold multiple values for other columns. 
 
-Select the True option to limit our view to only the records with multiple values. You will notice that the record count at the top of the table now shows the number of records with these blank rows. 
+Select the *True* option to limit our view to only the records with multiple values. You will notice that the record count at the top of the table now shows the number of records with these blank rows. 
 
-To begin to collapse the values, let's go to the next column in the table. Click on the drop-down menu and select Edit cells -> Join multi-value cells. A window will pop-up asking for the delimiter you would like to use to separate values. In order to reduce confusion with semi-colons or commas that may already be in the records, put " | " in the text box and click OK. 
+To begin to collapse the values, let's go to the next column in the table. Click on the drop-down menu and select **Edit cells** > **Join multi-value cells**. A window will pop-up asking for the delimiter you would like to use to separate values. In order to reduce confusion with semi-colons or commas that may already be in the records, put **" | "** in the text box and click OK. 
 
 Refine may take some time to complete that process if the table is very large. Proceed through the rest of the columns in the table performing the same process. The number at the top of the table will get progressively smaller until there are no blank rows left. Once this happens, deselect the True option in the facet to return to the full view of all records. We now should have the same number of rows and records.
 
+Once you have joined all the cells, remove the blank facet for identifier by clicking the "X" in the upper left corner of the facet box.
+
+*(In order to save time with this step, you may instead load a tab-delimited version of the project with all the joins completed.)*
+
+
 ### Remove Deleted Records
 
-One last step we need to take to get the table ready to analyze is removed "deleted" records from the table. The OAI protocol allows publishers of data to indicate when records have been removed from a resource by adding the value "deleted" to an element called <status>. To identify which records these are, find the Status column. Click on the drop-down and select Facet -> Text facet. A new facet box will appear with the unique values for this property. Select "deleted" from this facet to limit the table to only the rows for the deleted records.
+One last step we need to take to get the table ready to analyze is removed "deleted" records from the table. The OAI protocol allows publishers of data to indicate when records have been removed from a resource by adding the value "deleted" to an element called `<status>`. To identify which records these are, find the status column. Click on the drop-down and select **Facet** > **Text facet**. A new facet box will appear with the unique values for this property. Select "deleted" from this facet to limit the table to only the rows for the deleted records.
 
-Now we need to remove those records. To the left of the very first column with the OAI header, there is a mini-column with the heading "All". This column has different options than the others. Click on the drop-down menu on that column and select Edit rows -> Remove all matching rows. When Refine finishes this step, you show have no records showing. Unselect the option for "deleted" to restore the remaining records.
+Now we need to remove those records. Go to the **All Data** column in the far left. This column has different options than the others. Click on the drop-down menu on that column and select **Edit rows** > **Remove all matching rows**. When Refine finishes this step, you show have no records showing. Unselect the option for "deleted" in the facet we created for status to restore the remaining records.
 
 ### Undo/Redo & Applying Saved Actions
 
@@ -118,7 +128,7 @@ OpenRefine lets you undo (and redo) any number of the transformations you will e
 
 The 'Undo' and 'Redo' options are accessed via the lefthand panel, which lists all the steps you have undertaken. To undo, simply click on the last step you want to preserve in the list. This will automatically wipe out all the changes made after that step. The remaining steps will continue to show as greyed out; you can reapply them by simply clicking on the last step you want to apply. However, if you undo something and then apply new transformations, the greyed out steps will disappear completely, so make sure you don't need to save any of these steps before you get back to work!
 
-This method will also allow you to take your work on one dataset and apply it to another via simple copy-paste. If you wish to save what you have done to be re-applied later, or to an entirely different project, click **Extract**. This allows you to copy any of the steps (or all of them) as JSON (Javascript Object Notation). This JSON data can be saved to separate file and used later by clicking the **Apply** button and pasting in the JSON data. This could be a great time-saver as you work through iterative XML feeds over time.
+This method will also allow you to take your work on one dataset and apply it to another via simple copy-paste. If you wish to save what you have done to be re-applied later, or to an entirely different project, click **Extract**. This allows you to copy any of the steps (or all of them) as JSON (Javascript Object Notation). This JSON data can be saved to separate file and used later by clicking the **Apply** button and pasting in the JSON data. This could be a great time-saver as you work through iterative XML feeds of the same data over time.
 
 ## Assessment Tools
 
@@ -128,11 +138,11 @@ You can sort data in OpenRefine by to the drop-down menu and choosing **Sort**. 
 
 Let's try it ourselves on the title column. Click Sort in the drop-down menu for the Title column. Choose to sort by text, and in a-z order.
 
-Note that in the furthest lefthand column, the Refine-appointed row ID numbers are still tied to their original rows. This is because sorts in OpenRefine are temporary -- if you remove the Sort, the data will go back to its original "unordered" form. You can do this by selecting **Sort** > **Remove Sort**. If you want to make the sort permanent, you can instead choose Sort -> Reorder rows permanently. The numbers in the lefthand column will now change to reflect the new order.
+Note that in the furthest lefthand column, the Refine-appointed row ID numbers are still tied to their original rows. This is because sorts in OpenRefine are temporary -- if you remove the Sort, the data will go back to its original "unordered" form. You can do this by selecting **Sort** > **Remove Sort**. If you want to make the sort permanent, you can instead choose **Sort > Reorder rows permanently**. The numbers in the lefthand column will now change to reflect the new order.
 
 ### Faceting
 
-The core of Refine's power lies in its use of Facets and Filtering. We have already used faceting to do some basic clean-up of our data set, but we will now use them to analyze our data. Facets allow you to take a macro-level look at a large amount of data by counting individual pieces of column data, and listing them. Filtering can also allow you to select subsets of your data to act on, instead of changing entire columns.
+The core of Refine's power lies in its use of Facets and Filtering. We have already used facets to do some basic clean-up of our data set, but we will now use them to analyze our data. Facets allow you to take a macro-level look at a large amount of data by counting individual pieces of column data, and listing them. Filtering can also allow you to select subsets of your data to act on, instead of changing entire columns.
 
  Refine supports a range of other types of facet. These include:
 
@@ -141,44 +151,50 @@ The core of Refine's power lies in its use of Facets and Filtering. We have alre
 * **Scatterplot** facets are less commonly used ([see this tutorial for more information](http://enipedia.tudelft.nl/wiki/OpenRefine_Tutorial#Exploring_the_data_with_scatter_plots)).
 * **Custom** facets offer a range of different customized facets, and also allow you write your own.
 
-Let's create a facet on the *Binding* column. Select: **Facet** > **Text facet**. A new facet should appear in the lefthand window.
+Let's create a facet on the `<edm:dataProvider>` column. Select: **Facet** > **Text facet**. A new facet should appear in the lefthand window.
 
-Clicking on any of the entries in the facet window will change the interface to include only the record(s) featuring that facet entry. (If we had set our view to Rows, only the specific rows containing that facet entry would appear.) If you move your mouse pointer over an entry in the facet window, you can select multiple facet entries using the **Include** popup next to each entry. You can also select **Invert** at the top of the facet window to automatically select the opposite of the values you chose.
+Clicking on any of the entries in the facet window will change the interface to include only the record(s) featuring that facet entry. If you move your mouse pointer over an entry in the facet window, you can select multiple facet entries using the **Include** popup next to each entry. You can also select **Invert** at the top of the facet window to automatically select the opposite of the values you chose.
 
 If you move your mouse pointer over an entry in the facet window, you'll also see the option to **Edit** the term comes up. By changing the text in the edit box and clicking Apply, you will automatically change all instances in the data at once.
 
-In terms of assesssment, how much of each represented element/field is empty? Try creating a custom facet for empty values: **Facet** > **Customized Facets** > **Facet by Blank**
+Text facets are probably the most useful type, but another we have also used is essential for determining how much of each represented element/field is empty. Try creating a custom facet for empty values in the `<edm:isShownAt>`: **Facet** > **Customized Facets** > **Facet by Blank**
 
 ### Filtering
 
-You can also apply Text Filters which looks for a particular piece of text appearing in a column. Click the drop down menu at the top of the column you want to filter and choose **Text filter**. In the facet area, a filter box will appear. Type in the text you want to use in the Filter to display only rows which contain that text in the selected column.
+You can also apply Text Filters which looks for a particular piece of text appearing in a column. Click the drop down menu at the top of the subject column and choose **Text filter**. In the facet area, a filter box will appear. Type in the text you want to use in the Filter to display only rows which contain that text in the selected column.
 
-In our data, typing *skin* will limit what we see to only the 3 records who values in the Facet contain the word skin somewhere.
+In our data, typing *null* will limit what we see to only the 3 records who values in the Facet contain the word nulln somewhere.
 
 ### Splitting & Joining Multi-Valued Cells
 
-We've already learned how to join multiple rows into a single cell. As part of our analysis though we might want to split these apart for individual analysis. Refine can easily break apart this data and put it back together later. To do this, select **Edit Cells** > **Split Multi-Valued Cells** on the <dc:identifier> column's dropdown menu. Enter the same pipe character we used earlier to indicate where the values have been delimited "" | "" in the pop-up menu:
+We've already learned how to join multiple rows into a single cell. As part of our analysis though we might want to split these apart for individual analysis. Refine can easily break apart this data and put it back together later. For example, in this data set we want to make sure that the identifier in the first position in each record is the one that should be used for the DPLA identifier. If we split the identifiers apart we can evaluate just those properties, and then we can put them back together to do other review.
+
+To do this, select **Edit Cells** > **Split Multi-Valued Cells** on the `<dc:identifier>` column's dropdown menu. Enter the same pipe character we used earlier to indicate where the values have been delimited **" | "** in the pop-up menu:
 
 This splits the values back into separate rows. That may not be the most useful way to analyze these values however. Instead, let's try splitting them into new columns.
 
 First, let's rejoin this split data by undoing our last action.
 
-Next, let's click on the drop-down menu and choose Edit Column -> Split into several columns. Put our pipe delimiter in the pop-up window and hit Ok.
+Next, let's click on the drop-down menu and choose **Edit Column** > **Split into several columns**. Put our pipe delimiter in the pop-up window and hit Ok.
 
-Refine has now added several new columns to our table for the multiple values. We can facet each column to see the identifiers that were in the first, second, and third position for each record.
+Refine has now added several new columns to our table for the multiple values. We can facet and filter each column to see the identifiers that were in the first, second, and third position for each record and analyze the identifiers in the first column to see what they look like. In this case, we could filter for the prefixes that we expect to see here (e.g. "auhist", "auislandora", "p16808coll12", etc.).
 
-## Analysis for DPLA Requirements
+To put our columns back together, let's again undo our last action.
+
+## Analysis for DPLA Compatibility 
 
 DPLA has very specific requirements and recommendations for data that is being shared with us. Open Refine gives you analysis tools to determine if data is ready for sharing.
 
 ### Required Fields
 
-The most important thing to check with Refine is the presence of values in required properties. Since we cleaned up the table to create a single row for each record we can simply run the Facet -> Customized Facet -> Facet by blank to see if every record contains a value for:
+The most important thing to check with Refine is the presence of values in required properties. Since we cleaned up the table to create a single row for each record we can simply run the **Facet** > **Customized Facet** > **Facet by blank** to see if every record contains a value for:
 * Title
 * Data Provider (contributing institution)
 * Rights statement
 * IsShownAt
 * Thumbnail (in some cases this may not be in every record if objects that are video or audio are included)
+
+To evaluate *rights* in particular, you may need to analyze more than one column at once. Luckily, OpenRefine allows you to combine more than one facet. Let's create text facets for both the `dc:rights` and `edm:rights` columns. At the bottom of the lists of text values for each facet we see the value *(blank)*. This is not an indication of a value in the text, but that the cell is actually blank. Clicking on the option for blank in the `edm:rights` facet first, we see that the number for the blank values in the `dc:rights` facet updates to reflect only these newly selected records. Clicking the blank facet now in the `dc:rights` facet will limit our table to just those records missing a value in both of these properties. From here we could choose to star these records for later analysis or export just these rows in a table to download (more on that later).
 
 ### Types
 
@@ -235,11 +251,13 @@ One final column that might be helpful to facet is the set name. By selecting a 
 
 ## Data Remediation
 
-### Clustering
+The following sections refer to methods of enhancing and changing data rather than just analyzing it. With the exception of the section on **Adding a New Column From Another Spreadsheet**, most of the information to follow will be of limited usefulness when analyzing data at DPLA Hubs for compatibility. However, as it may be quite useful in other contexts, or for DPLA Contributing Institutions themselves, we will include these sections as well. 
+
+## Clustering
 
 Clustering is Refine's method of algorithmically comparing a column's data against itself to look for inconsistencies. Refine uses two methods (Key Collision and Nearest Neighbor) with different functions to look for potential data inconsistencies.
 
-On the facet sidebar, hit **Reset all** to clear any facets or filters that are currently selected. Let's try clustering the Subject column. To start, let's use the split cells function to put each subject back in a single row. Once that is complete, click the drop-down on this column and choose Edit cells -> cluster and edit.
+On the facet sidebar, hit **Reset all** to clear any facets or filters that are currently selected. Let's try clustering the Subject column. To start, let's use the split cells function to put each subject back in a single row. Once that is complete, click the drop-down on this column and choose **Edit cells** > **Cluster and edit**.
 
 The Clusters from our dataset are mostly textual inconsistencies -- spelling, capitalization, etc. For each, you have the option of merging the values together, replacing inconsistencies with a single, consistent value. By default OpenRefine uses the most common value in the cluster as the new value, but you can select one of the other values by clicking the value itself, or you can simply type the desired value into the New Cell Value box.
 
@@ -249,10 +267,10 @@ Clustering can raise some interesting assessment questions: ***Are data values/t
 
 The default Cluster method, Key Collision/Fingerprint, is designed to provide as few false-positive results as possible. Other cluster functions will give you a wide range of supposed inconsistencies. Take 5 minutes to play around with the clustering results.
 
-When finsihed, re-join the values with a pipe character: **Edit Cells** > **Join Multi-Valued Cells**.
-
 #### Note
 >It is worth noting that clustering in OpenRefine works only at the syntactic level (the character composition of the cell value) and while very useful to spot errors, typos, and inconsistencies it's by no means enough to perform effective semantically-aware reconciliation.
+
+When finished, re-join the values with a pipe character: **Edit Cells** > **Join Multi-Valued Cells**.
 
 ### GREL Expressions
 
@@ -285,9 +303,7 @@ GREL expressions are written as a function being applied to some kind of data va
 
 ![refine-8.png](images/refine-8.png)
 
-GREL transformations can also create new columns. Simply select the source column that will act as the basis for the mew and select **Edit columns** > **Add column based on this column...** from the drop-down menu. The command window will look almost the same as the Transform window. (Make sure you give your new column a name.)
-
-Try out these GREL expressions on the Provenance column. You don't need to actually change the data, but do watch the previews on the command window and report any problems you run into!
+Try out these GREL expressions on the any column of your choice. You don't need to actually change the data, but do watch the previews on the command window and report any problems you run into!
 
 * Change cases to uppercase and lowercase
 * Replace a string of text: `value.replace('a', '@@@'))`
@@ -298,25 +314,27 @@ Let's imagine that we have a second spreadsheet of the DPLA records for these it
 
 The first thing we need to do is upload our second spreadsheet. Click **Open** from the top of the refine window and upload the spreadsheet the same way we had previously uploaded our XML file.
 
-Joining the two spreadsheet relies on finding a key column. These are columns in each spreadsheet that hold identical values. For this example, let's use the **isShownAt** column in the DPLA spreadsheet and the **edm:isShownAt** column in our first spreadsheet.
+Joining the two spreadsheet relies on finding a key column. These are columns in each spreadsheet that hold identical values. For this example, let's use the `isShownAt` column in the DPLA spreadsheet and the `edm:isShownAt` column in our first spreadsheet.
 
-We will first need to add a new column to hold our new values. Click the drop-down on the **edm:isShownAt** column and choose "Edit column" -> "Add column based on this column." A window will open for the GREL expression to create our new column. First we need to add a new column name in the first blank box. Next you'll notice the word value is logged in the command window; this variable stands in for the original value of the cells that we aim to change.
+We will first need to add a new column to hold our new values. Click the drop-down on the `edm:isShownAt` column and choose **Edit column** > **Add column based on this column**. A window will open for the GREL expression to create our new column. First we need to add a new column name in the first blank box. Next you'll notice the word value is logged in the command window; this variable stands in for the original value of the cells that we aim to change.
 
 GREL expressions are written as a function being applied to some kind of data value. Some GREL functions require additional parameters or options to control what the function does. Underneath the command window, you can see a preview of the changes your expressions will cause.
 
 To add the new column we are going to use a command called cell.cross. The paramenters required will be the spreadsheet and column names:
 
-cell.cross("DPLA Spreadsheet", "isShownAt").cells["edm:isShownAt"].value[0]
+`cell.cross("DPLA Spreadsheet", "isShownAt").cells["edm:isShownAt"].value[0]`
 
 You can see in the preview window that we now have matching DPLA id numbers for each record.
 
 We can make this expression slightly better by adding some logic to avoid errors when there is not a matching row in the DPLA spreadsheet:
 
-if (value!='null',cell.cross("Merge Test B", "HESA code").cells["Average Teaching Score"].value[0],'')
+`if (value!='null',cell.cross("Merge Test B", "HESA code").cells["Average Teaching Score"].value[0],'')`
 
 This statement now says to add the DPLA id **only if** the **edm:isShownAt** field is populated.
 
 ## Validating Data
+
+The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **CreateProject** and going through the steps again to upload the file *book.csv* from our sample data.
 
 ### Reconciliation
 
