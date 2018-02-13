@@ -359,7 +359,7 @@ This statement now says to add the DPLA id **only if** the **isShownAt** field i
 
 ## Validating Data
 
-The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **CreateProject** and go through the steps again to upload the file *book.csv* from our sample data.
+The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **Open** and go through the steps again to upload the file *book.csv* from our sample data.
 
 ### Reconciliation
 
@@ -404,7 +404,7 @@ Depending on what you need or want from your data, it may be pertinent to enrich
 
 What if we wanted our Schoenberg data to contain geolocational data for the auction houses that sold some of the manuscripts? That metadata could potentially fuel a discovery layer to see where most of the manuscripts were sold.
 
-1. First, [download this Refine project](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OR-Data/Auction-Houses.openrefine.tar.gz?raw=true), which contains some of the addresses of auction houses found in our Schoenberg data.
+1. First, download *Auction-Houses.openrefine.tar.gz* from the OR data folder, which contains some of the addresses of auction houses found in our Schoenberg data.
 2. Open a new browser tab and navigate to http://127.0.0.1:3333/, which will open a new Refine window. Click the lefthand **Import Project** tab and open *Auction-Houses.openrefine.tar.gz*. You should be looking at a previously worked on Refine project with two columns: *Company* and *Address*.
 3. On the dropdown for *Address*, select **Add Column** > **Add column by fetching URLs**. Name this new column *JSON*.
 4. Run this GREL expression: `"https://maps.googleapis.com/maps/api/geocode/json?address=" + escape(value,"url")`
