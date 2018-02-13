@@ -1,7 +1,7 @@
 # OpenRefine Workshop, DPLA Members Meeting, March 14, 2018
 
-*led by [Gretchen Gueguen, Data Services Coordinator, Digital Public Library of America](mailto:gretchen@dp.la)*
-*Based on [an OpenRefine workshop](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OpenRefine.md) created by Scotty Carlson*
+*led by [Gretchen Gueguen, Data Services Coordinator, Digital Public Library of America](mailto:gretchen@dp.la). 
+Based on [an OpenRefine workshop](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OpenRefine.md) created by Scotty Carlson*
 
 ## License
 All instructional materials are being made available under a [Creative Commons Attribution license] (https://creativecommons.org/licenses/by/4.0/). Feel free to reuse these materials according to these license terms.
@@ -62,11 +62,13 @@ Refine can import TSV, CSV, Excel, XML, JSON, and Google Data documents as well 
 
 In our DPLA workflows we might typically work with XML data and Open Refine can help us convert that data to a tabular format. However, it requires some clean-up when records have multiple instances of a property. Let's start by uploading a file.
 
-Start with **Create Project** in the menu, then use the button to select a file from your computer. Let's upload the sample file from our workshop documents. This is a file typical of the output of an OAI PMH feed with about 75,000 records. Once you've selected the file click **Next**.
+Start with **Create Project** in the menu, then use the button to select a file from your computer. Let's upload the sample file *DC02092018.xml* from the [OR data](https://github.com/dpla/Metadata-Analysis-Workshop/tree/master/OR%20data) folder. This is a file typical of the output of an OAI PMH feed with about 75,000 records. Once you've selected the file click **Next**.
 
 OpenRefine will then upload the XML file. The amount of time this takes will depend on the size of the files. Very large files may be difficult or even impossible to work with.
 
 Once the file is uploaded, you must select the XML property that is the parent for the record, so that they can be parsed accurately. Refine presents you with the beginning of the file and you must click on the opening <record> tag. You will be able to tell that you have the correct element selected because the record will be highlighted yellow.
+ 
+ ![select.png](images/select.png)
 
 You should now see a preview of what your data will look like as a table in the main interface. It may look a bit off at this point, but don't worry, we will clean it up in the next step. Just make sure that the values in columns that have values look like they are coming from the correct properties (e.g. creators in one column, dates in another as opposed to seeing several different types of values in a column.) 
 
@@ -82,6 +84,8 @@ Each of the columns in the data have drop-down menus (the upside down triangles)
 OpenRefine has two modes of viewing data: Rows and Records. Upon project creation, the default setting is Rows mode, where each row represents a single record in the data set -- in our case, one entry in the database. In Records mode, OpenRefine can group multiple rows as belonging to the same Record in the original XML file. Switching to this mode, we see that the All Data column now shows a number of blank cells. These represent rows that are part of a single record, the start of which is indicated by the numbered row. Multi-row records happen when Refine detects multiple values within the selected record or node.
 
 We also notice that our count of records is considerably higher than the 75,000 or so we expect. This is because, like a database, the first column needs to act as "Key" column, or a column with data that will be unique for each record. If the first column has empty cells, as ours does, these will be erroneously treated as part of a previous record. On the other hand if this column originally had multiple values in the original record, these will now be treated as multiple records. If we toggle back and forth between Records and Rows we also notice that the two views show different totals
+
+![rows_records.png](images/rows_records.png)
 
 To combat this, we need to move a unique record identifier to the first column of our OpenRefine Data. This will help make sure that multi-row records stay grouped according to your understanding of a record.
 
@@ -109,11 +113,13 @@ Select the *True* option to limit our view to only the records with multiple val
 
 To begin to collapse the values, let's go to the next column in the table. Click on the drop-down menu and select **Edit cells** > **Join multi-value cells**. A window will pop-up asking for the delimiter you would like to use to separate values. In order to reduce confusion with semi-colons or commas that may already be in the records, put **" | "** in the text box and click OK. 
 
+![join.png](images/join.png)
+
 Refine may take some time to complete that process if the table is very large. Proceed through the rest of the columns in the table performing the same process. The number at the top of the table will get progressively smaller until there are no blank rows left. Once this happens, deselect the True option in the facet to return to the full view of all records. We now should have the same number of rows and records.
 
 Once you have joined all the cells, remove the blank facet for identifier by clicking the "X" in the upper left corner of the facet box.
 
-*(In order to save time with this step, you may instead load a tab-delimited version of the project with all the joins completed.)*
+*(In order to save time with this step, you may instead load a tab-delimited version of the project with all the joins completed, *DC02092018.tsv* from the OR data folder. Click **Open Project** at the top of the screen and repeat the upload process with this new file to launch the new project.)*
 
 
 ### Remove Deleted Records
@@ -128,7 +134,11 @@ OpenRefine lets you undo (and redo) any number of the transformations you will e
 
 The 'Undo' and 'Redo' options are accessed via the lefthand panel, which lists all the steps you have undertaken. To undo, simply click on the last step you want to preserve in the list. This will automatically wipe out all the changes made after that step. The remaining steps will continue to show as greyed out; you can reapply them by simply clicking on the last step you want to apply. However, if you undo something and then apply new transformations, the greyed out steps will disappear completely, so make sure you don't need to save any of these steps before you get back to work!
 
-This method will also allow you to take your work on one dataset and apply it to another via simple copy-paste. If you wish to save what you have done to be re-applied later, or to an entirely different project, click **Extract**. This allows you to copy any of the steps (or all of them) as JSON (Javascript Object Notation). This JSON data can be saved to separate file and used later by clicking the **Apply** button and pasting in the JSON data. This could be a great time-saver as you work through iterative XML feeds of the same data over time.
+This method will also allow you to take your work on one dataset and apply it to another via simple copy-paste. If you wish to save what you have done to be re-applied later, or to an entirely different project, click **Extract**. This allows you to copy any of the steps (or all of them) as JSON (Javascript Object Notation). 
+
+![extract.png](images/extract.png)
+
+This JSON data can be saved to separate file and used later by clicking the **Apply** button and pasting in the JSON data. This could be a great time-saver as you work through iterative XML feeds of the same data over time.
 
 ## Assessment Tools
 
@@ -137,6 +147,8 @@ This method will also allow you to take your work on one dataset and apply it to
 You can sort data in OpenRefine by to the drop-down menu and choosing **Sort**. Once you have sorted the data, a new 'Sort' drop-down menu will be displayed that lets you amend the existing sort (e.g., reverse the sort order), remove existing sorts, and/or make sorts permanent.
 
 Let's try it ourselves on the title column. Click Sort in the drop-down menu for the Title column. Choose to sort by text, and in a-z order.
+
+![sort.png](images/sort.png)
 
 Note that in the furthest lefthand column, the Refine-appointed row ID numbers are still tied to their original rows. This is because sorts in OpenRefine are temporary -- if you remove the Sort, the data will go back to its original "unordered" form. You can do this by selecting **Sort** > **Remove Sort**. If you want to make the sort permanent, you can instead choose **Sort > Reorder rows permanently**. The numbers in the lefthand column will now change to reflect the new order.
 
@@ -171,6 +183,8 @@ We've already learned how to join multiple rows into a single cell. As part of o
 
 To do this, select **Edit Cells** > **Split Multi-Valued Cells** on the `<dc:identifier>` column's dropdown menu. Enter the same pipe character we used earlier to indicate where the values have been delimited **" | "** in the pop-up menu:
 
+![split.png](images/split.png)
+
 This splits the values back into separate rows. That may not be the most useful way to analyze these values however. Instead, let's try splitting them into new columns.
 
 First, let's rejoin this split data by undoing our last action.
@@ -194,7 +208,11 @@ The most important thing to check with Refine is the presence of values in requi
 * IsShownAt
 * Thumbnail (in some cases this may not be in every record if objects that are video or audio are included)
 
-To evaluate *rights* in particular, you may need to analyze more than one column at once. Luckily, OpenRefine allows you to combine more than one facet. Let's create text facets for both the `dc:rights` and `edm:rights` columns. At the bottom of the lists of text values for each facet we see the value *(blank)*. This is not an indication of a value in the text, but that the cell is actually blank. Clicking on the option for blank in the `edm:rights` facet first, we see that the number for the blank values in the `dc:rights` facet updates to reflect only these newly selected records. Clicking the blank facet now in the `dc:rights` facet will limit our table to just those records missing a value in both of these properties. From here we could choose to star these records for later analysis or export just these rows in a table to download (more on that later).
+To evaluate *rights* in particular, you may need to analyze more than one column at once. Luckily, OpenRefine allows you to combine more than one facet. Let's create text facets for both the `dc:rights` and `edm:rights` columns. At the bottom of the lists of text values for each facet we see the value *(blank)*. 
+
+![facet.png](images/facet.png)
+
+This is not an indication of a value in the text, but that the cell is actually blank. Clicking on the option for blank in the `edm:rights` facet first, we see that the number for the blank values in the `dc:rights` facet updates to reflect only these newly selected records. Clicking the blank facet now in the `dc:rights` facet will limit our table to just those records missing a value in both of these properties. From here we could choose to star these records for later analysis or export just these rows in a table to download (more on that later).
 
 ### Types
 
@@ -233,7 +251,11 @@ Temporal on the other is a property that describes a time period that an item is
 
 Unfortunately, these three facets of temporal data (date of creation, date of digitization, and date of temporal coverage) can get confused. Reviewing the dates in these properties if they are present can help to determine if they have been used consistently across all records.
 
-One method that can be helpful is to use the filter tool to find values that are after a particular date, for example if we know a collection shouldn't have any creation dates after 2000. Start by clicking on the drop-down for the date column and choose Text Filter. In the text filter box, click the checkbox for regular expression. This will allow us to do our filter using the regular expression query language, which is a very powerful way to do very precise string searching. We are just going to do a very simple search though for "^20". The "^" is the regular expression indicator for the beginning of a string. The results of this filter should show us only rows with a value in this cell that starts with "20" which, for date, would mean dates after 2000. (If you'd like to learn more regular expressions, try a regex cheatsheet. I like the one at: https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/)
+One method that can be helpful is to use the filter tool to find values that are after a particular date, for example if we know a collection shouldn't have any creation dates after 2000. Start by clicking on the drop-down for the date column and choose Text Filter. In the text filter box, click the checkbox for regular expression. This will allow us to do our filter using the regular expression query language, which is a very powerful way to do very precise string searching. We are just going to do a very simple search though for "^20". The "^" is the regular expression indicator for the beginning of a string. 
+
+![filter.png](images/filter.png)
+
+The results of this filter should show us only rows with a value in this cell that starts with "20" which, for date, would mean dates after 2000. (If you'd like to learn more regular expressions, try a regex cheatsheet. I like the one at: https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/)
 
 ### Collection Title
 
@@ -280,9 +302,17 @@ Transformations in OpenRefine are ways of manipulating data in columns beyond fa
 
 Some common transformations are accessible directly through menu options, without having to type them directly. Click on a column drop-down and select **Edit Cells** > **Common Transformations** to see them:
 
-![refine-7.png](images/refine-7.png)
+![transforms.png](images/transforms.png)
 
-Behind these menu options, however, are GREL expressions that can be applied manually:
+#### Writing GREL Expressions
+
+The transform window is where we can get into the grooves of Refine's power by executing custom-written GREL commands. To get here, select from a column drop-down: **Edit Cells** > **Transform...**. Upon opening, you'll notice the word `value` is logged in the command window; this variable stands in for the original value of the cells that we aim to change. (`value` is also a valid GREL expression -- make no changes.)
+
+![transforms.png](images/transforms.png)
+
+GREL expressions are written as a function being applied to some kind of data value. Some GREL functions require additional parameters or options to control what the function does. Underneath the command window, you can see a preview of the changes your expressions will inflict.
+
+GREL can be used to manually create those same common transformations from the menu we just looked at:
 
 |Common Transformation | GREL expression|
 |:--------------------:|:--------------:|
@@ -294,14 +324,6 @@ Behind these menu options, however, are GREL expressions that can be applied man
 |Convert the value to a number|`value.toNumber()`|
 |Convert the value to a date|`value.toDate()`|
 |Convert the value to a string of text|`value.toString()`|
-
-#### Writing GREL Expressions
-
-The transform window is where we can get into the grooves of Refine's power by executing custom-written GREL commands. To get here, select from a column drop-down: **Edit Cells** > **Transform...**. Upon opening, you'll notice the word `value` is logged in the command window; this variable stands in for the original value of the cells that we aim to change. (`value` is also a valid GREL expression -- make no changes.)
-
-GREL expressions are written as a function being applied to some kind of data value. Some GREL functions require additional parameters or options to control what the function does. Underneath the command window, you can see a preview of the changes your expressions will inflict.
-
-![refine-8.png](images/refine-8.png)
 
 Try out these GREL expressions on the any column of your choice. You don't need to actually change the data, but do watch the previews on the command window and report any problems you run into!
 
@@ -316,7 +338,11 @@ The first thing we need to do is upload our second spreadsheet. Click **Open** f
 
 Joining the two spreadsheet relies on finding a key column. These are columns in each spreadsheet that hold identical values. For this example, let's use the `isShownAt` column in the DPLA spreadsheet and the `edm:isShownAt` column in our first spreadsheet.
 
-We will first need to add a new column to hold our new values. Click the drop-down on the `edm:isShownAt` column and choose **Edit column** > **Add column based on this column**. A window will open for the GREL expression to create our new column. First we need to add a new column name in the first blank box. Next you'll notice the word value is logged in the command window; this variable stands in for the original value of the cells that we aim to change.
+We will first need to add a new column to hold our new values. Click the drop-down on the `edm:isShownAt` column and choose **Edit column** > **Add column based on this column**. A window will open for the GREL expression to create our new column. 
+
+![merge.png](images/merge.png)
+
+First we need to add a new column name in the first blank box. Next you'll notice the word value is logged in the command window; this variable stands in for the original value of the cells that we aim to change.
 
 GREL expressions are written as a function being applied to some kind of data value. Some GREL functions require additional parameters or options to control what the function does. Underneath the command window, you can see a preview of the changes your expressions will cause.
 
@@ -334,7 +360,7 @@ This statement now says to add the DPLA id **only if** the **isShownAt** field i
 
 ## Validating Data
 
-The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **CreateProject** and going through the steps again to upload the file *book.csv* from our sample data.
+The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **CreateProject** and go through the steps again to upload the file *book.csv* from our sample data.
 
 ### Reconciliation
 
