@@ -1,7 +1,6 @@
 # OpenRefine Workshop, DPLA Members Meeting, March 14, 2018
 
-*led by [Gretchen Gueguen, Data Services Coordinator, Digital Public Library of America](mailto:gretchen@dp.la). 
-Based on [an OpenRefine workshop](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OpenRefine.md) created by Scotty Carlson*
+*This is a separate workshop, led by [Gretchen Gueguen, Data Services Coordinator, Digital Public Library of America](mailto:gretchen@dp.la) at the 2018 DPLA Members Meeting. It is based on [an OpenRefine workshop](https://github.com/DLFMetadataAssessment/DLFMetadataQAWorkshop17/blob/master/OpenRefine.md) created by Scotty Carlson*
 
 ## License
 All instructional materials are being made available under a [Creative Commons Attribution license] (https://creativecommons.org/licenses/by/4.0/). Feel free to reuse these materials according to these license terms.
@@ -18,7 +17,7 @@ OpenRefine (formerly Google Refine) is a powerful tool for working with messy da
 
 Can OpenRefine be used to create data from scratch? Not really. OpenRefine is built to work with existing data, although projects can be enriched with outside data.
 
-Download links and instructions can be found [here](). OpenRefine requires a working Java runtime environment, otherwise the program will not start. Upon launch, OpenRefine will run as a local server, opening in your computer's browser. As long as OpenRefine is running, you can point your browser at either http://127.0.0.1:3333/ or http://localhost:3333/ to use it, even in several browser tabs/windows.
+Download links and instructions can be found [here](https://github.com/dpla/Metadata-Analysis-Workshop/blob/master/ORrequirements.md). OpenRefine requires a working Java runtime environment, otherwise the program will not start. Upon launch, OpenRefine will run as a local server, opening in your computer's browser. As long as OpenRefine is running, you can point your browser at either http://127.0.0.1:3333/ or http://localhost:3333/ to use it, even in several browser tabs/windows.
 
 ## Module Objectives
 
