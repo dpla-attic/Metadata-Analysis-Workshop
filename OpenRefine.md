@@ -307,7 +307,7 @@ Some common transformations are accessible directly through menu options, withou
 
 The transform window is where we can get into the grooves of Refine's power by executing custom-written GREL commands. To get here, select from a column drop-down: **Edit Cells** > **Transform...**. Upon opening, you'll notice the word `value` is logged in the command window; this variable stands in for the original value of the cells that we aim to change. (`value` is also a valid GREL expression -- make no changes.)
 
-![transforms.png](images/transforms.png)
+![transforms.png](images/GREL.png)
 
 GREL expressions are written as a function being applied to some kind of data value. Some GREL functions require additional parameters or options to control what the function does. Underneath the command window, you can see a preview of the changes your expressions will inflict.
 
@@ -359,7 +359,7 @@ This statement now says to add the DPLA id **only if** the **isShownAt** field i
 
 ## Validating Data
 
-The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **Open** and go through the steps again to upload the file *book.csv* from our sample data.
+The following sections on validating and enhancing data will be better served by using a different data set with more reconcilable creator and place names. To do these sections, let's create a new OpenRefine Project by clicking **Open** and go through the steps again to upload the file *schoenberg.csv* from our sample data.
 
 ### Reconciliation
 
@@ -415,20 +415,6 @@ The new column should be filled with JSON data from Google's Maps API. Now let's
 6. Run this GREL expression: `value.parseJson().results[0]["geometry"]["location"]["lat"] + ',' + value.parseJson().results[0]["geometry"]["location"]["lng"]`
 
 This new column is filled with parsed JSON data featuring the exact coordinates for each address.
-
-### Cross, OpenRefine's VLOOKUP Function
-
-Now that we have geo-coordinates, let's go back to our Schoenberg project and enrich the data with this new geographic information. To do this, we can use a **Cross** GREL, a command not unlike a VLOOKUP formula in Excel.
-
-The structure of a Cross GREL expression looks like this:
-
-`cell.cross("[Source Project]", "[Matching Column]")[0].cells["[Column Data We Want]"].value`
-
-So, we will select **Add Column** > **Add column based on this column** on *PrimarySeller* and make a new column, *LatLng*, using this GREL expression:
-
-`cell.cross("Auction-Houses", "Company")[0].cells["Coordinates"].value`
-
-You should now have a new column of coordinates next to *PrimarySeller*.
 
 ## Getting Data Out of OpenRefine
 
