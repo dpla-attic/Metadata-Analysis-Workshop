@@ -333,7 +333,7 @@ Try out these GREL expressions on the any column of your choice. You don't need 
 ### Adding a new column from another spreadsheet
 Let's imagine that we have a second spreadsheet of the DPLA records for these items. We want to add a column to our spreadsheet with the DPLA identifier.
 
-The first thing we need to do is upload our second spreadsheet. Click **Open** from the top of the refine window and upload the spreadsheet the same way we had previously uploaded our XML file. OpenRefine includes the file extension "csv" in the title after a blank space. GREL has difficulty dealing with blank spaces in table names, so let's rename the file. Click on the title name and it should become editable. Remove the final " csv" from the file.
+The first thing we need to do is upload our second spreadsheet. Click **Open** from the top of the refine window and upload *DPLA_Spreadsheet.csv* the same way we had previously uploaded our XML file. OpenRefine includes the file extension "csv" in the title after a blank space. GREL has difficulty dealing with blank spaces in table names, so let's rename the file. Click on the title name and it should become editable. Remove the final " csv" from the file.
 
 Joining the two spreadsheet relies on finding a key column. These are columns in each spreadsheet that hold identical values. For this example, let's use the `isShownAt` column in the DPLA spreadsheet and the `edm:isShownAt` column in our first spreadsheet.
 
