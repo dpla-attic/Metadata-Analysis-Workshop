@@ -369,8 +369,8 @@ Reconciliation allows you to match your data against external data services to r
 
 Let's try out a Reconciliation example using [Jeff Chiu's](https://github.com/codeforkjeff) VIAF Reconciliation service. (Note: Jeff's original version of this reconciliation service has been superseded by a new version, which can be found [here](https://github.com/codeforkjeff/conciliator). However, since our needs are super low for this example, we can use his deprecated public server at http://refine.codefork.com/. If you plan to play around with his service on your own, use the newer version.)
 
-1. First, let's use our split apart *Creator* column. Let's facet on the column: **Facet** > **Text facet**
-2. In the facet, let's **Include** the following five author names: 'Aesop', 'Aristotle', 'Caesar, Julius', 'Chaucer, Geoffrey', and 'Dante Alighieri'. You should see 19 matching records/rows.
+1. First, let's use the *Author* column. Let's facet on the column: **Facet** > **Text facet**
+2. In the facet, let's **Include** the following five author names. You can easily find them by placing a filter on the column to limit the values: 'Aesop', 'Aristotle', 'Caesar, Julius', 'Chaucer, Geoffrey', and 'Dante Alighieri'. You should see 19 matching records/rows.
 3. In the dropdown menu, select **Reconcile** > **Start Reconciling**.
 4. Click **Add Standard Service** and in the dialogue that appears, enter: http://refine.codefork.com/reconcile/viaf
 5. Since we know we are searching for the names of people, check the bubble next to **People** under **Reconcile each cell to an entity of one of these types**.
