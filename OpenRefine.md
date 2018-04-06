@@ -480,3 +480,4 @@ Suffix:
 [blank line break]
 </records>
 ```
+We could use a different template to get our DC spreadsheet into a Dublin Core XML feed as well. District Digital's Aaron Krebeck has created templates for doing this (they are the originators of the sample data) and posted then to GitHub at: https://gist.github.com/krebeck/a0ad9b2c3105295b8fbf59af8a55cacd. Take a look at this template and try it out. You might need to alter something to work with your revised data from earlier or you might choose to further refine your spreadsheet (for example, take a look at the column names and compare them to the template). Another example of a template made for DPLA work by Aaron transforms a spreadsheet to MODS XML: https://gist.github.com/krebeck/1c3c0257cecb25eb1a7c
